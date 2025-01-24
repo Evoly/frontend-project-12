@@ -1,4 +1,5 @@
 import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => (
   <main className='container-fluid h-100'>
@@ -7,7 +8,7 @@ const NotFound = () => (
         <img className="img-fluid h-25" src="./public/404.svg" alt="страница не найдена"/>
         <h1 className='text-muted'>Страница не найдена</h1>
         <p> Но вы можете перейти
-          <a href="/">на главную страницу</a>
+          <Link to="/"> на главную страницу</Link>
         </p>
       </Col>
     </Row>

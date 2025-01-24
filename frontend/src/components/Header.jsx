@@ -1,9 +1,10 @@
 import { Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Header = () => (
   <header className='shadow-sm bg-white '>
     <Navbar className=' navbar navbar-expand-lg navbar-light container'>
-      <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>   
+      <Link to="/" className='navbar-brand'>Hexlet Chat</Link>   
     </Navbar>
   </header>
 );

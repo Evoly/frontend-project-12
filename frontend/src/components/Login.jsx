@@ -1,4 +1,5 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -27,7 +28,7 @@ const Login = () => {
             </div>
             <div className='col-12 shadow-sm text-center p-3 bg-light'>
               <span>Нет аккаунта? </span>
-              <a href="/signup"> Регистрация</a>
+              <Link to="/signup"> Регистрация</Link>
             </div>
 
           </div>
