@@ -1,0 +1,17 @@
+{
+    "name": "@hexlet/code",
+    "version": "1.0.0",
+    "type": "module",
+    "repository": {
+        "type": "",
+        "url": ""
+    },
+    "license": "ISC",
+    "author": "Svetlana Semenko",
+    "scripts": {
+        "start": ""
+    },
+    "dependencies": {
+        "@hexlet/chat-server": "^2.0.4"
+    }
+}
