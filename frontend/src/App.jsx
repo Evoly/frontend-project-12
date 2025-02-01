@@ -1,25 +1,55 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-import { useState } from 'react'
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { useState } from 'react';
+import useAuth from './hooks/index.js';
+import AuthContext from './context/index.js';
 
 import Login from './components/Login';
 import Signup from './components/Signup';
 import NotFound from './components/NotFound';
 import Header from './components/Header';
+import ChatPage from './components/Chat';
 
-function App() {
-  //  const [count, setCount] = useState(0)
+const AuthProvider = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const logIn = () => setLoggedIn(true);
+  const logOut = () => {
+    localStorage.removeItem('userId');
+    setLoggedIn(false);
+  };
 
   return (
-    <>
-    <Header />
-      <Routes>
-        <Route path='/' element={<Navigate to="login"/>} />
-        <Route path='login' element={<Login />} />        
-        <Route path='signup' element={<Signup />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </>  
+    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+      {children}
+    </AuthContext.Provider>
+  )
+};
+
+const PrivateRoute = ({ children }) => {
+  const auth = useAuth();
+
+  return auth.loggedIn ? children : <Navigate to="/login" />
+}
+
+
+const App = () => {
+
+
+  return (
+    <AuthProvider>
+      <>
+        <BrowserRouter>
+          <Header />
+
+          <Routes>
+            <Route path='/' element={(<PrivateRoute><ChatPage /></PrivateRoute>)} />
+            <Route path='login' element={<Login />} />
+            <Route path='signup' element={<Signup />} />            
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </>
+    </AuthProvider >
   )
 }
 

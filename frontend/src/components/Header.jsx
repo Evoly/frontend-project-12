@@ -1,12 +1,32 @@
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks';
 
-const Header = () => (
-  <header className='shadow-sm bg-white '>
-    <Navbar className=' navbar navbar-expand-lg navbar-light container'>
-      <Link to="/" className='navbar-brand'>Hexlet Chat</Link>   
-    </Navbar>
-  </header>
-);
+const RenderLogOut = () =>  {
+  const auth = useAuth();
+
+  return (
+    <Button
+      type="button"
+      className="btn-primary"
+      onClick={auth.logOut}
+    >
+      Выйти
+    </Button>
+  )
+};
+
+const Header = () => {
+  const auth = useAuth();
+
+  return (
+    <header className='shadow-sm bg-white '>
+      <Navbar className=' navbar navbar-expand-lg navbar-light container'>
+        <Link to="/" className='navbar-brand'>Hexlet Chat</Link>
+        {auth.loggedIn && <RenderLogOut />}
+      </Navbar>
+    </header>
+  );
+}
 
 export default Header;

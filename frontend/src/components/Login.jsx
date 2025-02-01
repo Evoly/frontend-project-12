@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import useAuth from '../hooks';
+import axios from 'axios';
 
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
@@ -19,6 +20,7 @@ const Login = () => {
   const [isLoginFailed, setLoginFailed] = useState(false);
   const [isSubmitted, setSetsubmitted] = useState(false);
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -31,8 +33,8 @@ const Login = () => {
         const res = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
         setLoginFailed(false);
-        //  auth.logIn();
-        navigate('/chat');
+        auth.logIn();
+        navigate('/');
 
       } catch (err) {
         setLoginFailed(true);
