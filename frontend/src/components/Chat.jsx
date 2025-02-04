@@ -1,7 +1,94 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+//  import useAuth from '../hooks';
+
 import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
 
-const ChatPage = () => {
+const url = {
+  channels: '/api/v1/channels',
+  messages: '/api/v1/messages',
+};
+const { token } = JSON.parse(localStorage.getItem('userId'));
 
+const ChatPage = () => {
+  //  const auth = useAuth(); // todo
+
+  const [channels, setChannels] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [activeChannelId, setActiveId] = useState('1'); // todo
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const getChannels = async () => {
+      const res = await axios.get(url.channels, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res.data);
+      setChannels(res.data);
+    };
+    getChannels();
+
+    const getMessages = async () => {
+      const res = await axios.get(url.messages, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res.data);
+      setMessages(res.data);
+    };
+    getMessages();
+  }, []);  // ??????
+  
+  const changeActiveId = (id) => setActiveId(id);
+  
+  const renderListGroup = () =>{
+    return channels.map((channel) => (
+      <ListGroupItem key={channel.id} as="li" className="w-100 p-0">
+        <Button
+          type="button"
+          className="w-100 rounded-0 text-start btn btn-secondary"
+          onClick={() => changeActiveId(channel.id)}
+        >
+          <span className="me-1">#</span>
+          {channel.name}
+        </Button>
+      </ListGroupItem>
+    ));
+  };
+
+  const handleMessage = (event) => setMessage(event.target.value);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newMessage = { body: message, channelId: activeChannelId, username: 'admin' }; // todo username
+    const res = await axios.post(url.messages, newMessage, { headers: { Authorization: `Bearer ${token}`, }});
+    console.log('res:', res.data);
+  }
+  const renderMessages = (id) => {
+    const currentMessages = messages.filter((message) => message.channelId === id);
+    const channel = channels.find((channel) => channel.id === id);
+    if (!channel) return null;
+
+    return (
+      <>
+        <div className="bg-light mb-4 p-3 shadow-sm small">
+          <p className="m-0"><b># {channel.name}</b></p>
+          <span className="text-muted">{currentMessages.length} сообщения</span>
+        </div>
+        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+          {
+            currentMessages.map((message) =>(
+              <div className="text-break mb-2" key={message.id}><b>{message.username}</b>: {message.body}</div>
+            ))
+          }          
+        </div>
+      </>
+    );
+  };
+  console.log('message:', message)
   return(
     <main className='container overflow-hidden vh-100 rounded shadow my-4'>
       <Row className='h-100 bg-white flex-md-row'>
@@ -27,35 +114,29 @@ const ChatPage = () => {
             id="channels-box"
             className="p-2"
           >
-            <ListGroupItem as="li" className="w-100 p-0">
-              <Button 
-                type="button"
-                className="w-100 rounded-0 text-start btn btn-secondary">
-                  <span className="me-1">#</span>
-                  general
-              </Button>
-            </ListGroupItem>    
+            {renderListGroup()}
           </ListGroup>
         </Col>
         <Col className='p-0 h-100'>
           <div className="d-flex flex-column h-100">
-            <div className="bg-light mb-4 p-3 shadow-sm small">
-              <p className="m-0"><b># general</b></p>
-              <span className="text-muted">2 сообщения</span>
-            </div>
-            <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-              <div className="text-break mb-2"><b>admin</b>: 111</div>
-            </div>
+            {renderMessages(activeChannelId)}
             <div className="mt-auto px-5 py-3">
-              <Form noValidate className='py-1 border rounded-2'>
+              <Form noValidate className='py-1 border rounded-2' onSubmit={handleSubmit}>
                 <InputGroup>
                   <Form.Control
                     name="body"
                     aria-label="Новое сообщение"
                     placeholder="Введите сообщение..." 
                     className="border-0 p-0 ps-2 form-control"
+                    onChange={handleMessage}
+                    value={message}
                   />
-                  <Button variant="" type='submit' className="btn-group-vertical" disabled="">
+                  <Button
+                    variant=""
+                    type='submit'
+                    className="btn-group-vertical"
+                    disabled=""                    
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
                       width="20" height="20" fill="currentColor">
                       <path fillRule="evenodd"
