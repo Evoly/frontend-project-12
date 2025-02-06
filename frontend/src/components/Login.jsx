@@ -1,47 +1,9 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import useAuth from '../hooks';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
-// todo
-const apiPath = '/api/v1/';
-
-const routes = {
-  loginPath: () => [apiPath, 'login'].join('/'),
-  usersPath: () => [apiPath, 'data'].join('/'),
-};
-//
-
-
-const Login = () => {
-  const [isLoginFailed, setLoginFailed] = useState(false);
-  const [isSubmitted, setSetsubmitted] = useState(false);
-  const navigate = useNavigate();
-  const auth = useAuth();
-
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    onSubmit: async (values) => {
-      setSetsubmitted(true);
-      try {
-        const res = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        setLoginFailed(false);
-        auth.logIn();
-        navigate('/');
-
-      } catch (err) {
-        setLoginFailed(true);
-        console.log(err)
-      }
-    },
-  });
+const Login = ({ props }) => {
+  const { isLoginFailed, isSubmitted, formik } = props;
   
   return (
     <main className='container-fluid h-100'>

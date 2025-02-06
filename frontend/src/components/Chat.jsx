@@ -1,48 +1,9 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-//  import useAuth from '../hooks';
-
 import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
 
-const url = {
-  channels: '/api/v1/channels',
-  messages: '/api/v1/messages',
-};
-const { token } = JSON.parse(localStorage.getItem('userId'));
-
-const ChatPage = () => {
-  //  const auth = useAuth(); // todo
-
-  const [channels, setChannels] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [activeChannelId, setActiveId] = useState('1'); // todo
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    const getChannels = async () => {
-      const res = await axios.get(url.channels, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.data);
-      setChannels(res.data);
-    };
-    getChannels();
-
-    const getMessages = async () => {
-      const res = await axios.get(url.messages, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.data);
-      setMessages(res.data);
-    };
-    getMessages();
-  }, []);  // ??????
-  
-  const changeActiveId = (id) => setActiveId(id);
+const Chat = ({props}) => {
+  console.log('props', props);
+  const { channels, messages, message, activeChannelId, changeActiveId, handleSubmit, handleMessage } = props;
+  if (!channels) return;
   
   const renderListGroup = () =>{
     return channels.map((channel) => (
@@ -59,14 +20,7 @@ const ChatPage = () => {
     ));
   };
 
-  const handleMessage = (event) => setMessage(event.target.value);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const newMessage = { body: message, channelId: activeChannelId, username: 'admin' }; // todo username
-    const res = await axios.post(url.messages, newMessage, { headers: { Authorization: `Bearer ${token}`, }});
-    console.log('res:', res.data);
-  }
   const renderMessages = (id) => {
     const currentMessages = messages.filter((message) => message.channelId === id);
     const channel = channels.find((channel) => channel.id === id);
@@ -88,7 +42,7 @@ const ChatPage = () => {
       </>
     );
   };
-  console.log('message:', message)
+
   return(
     <main className='container overflow-hidden vh-100 rounded shadow my-4'>
       <Row className='h-100 bg-white flex-md-row'>
@@ -156,4 +110,4 @@ const ChatPage = () => {
   )
 };
 
-export default ChatPage;
+export default Chat;
