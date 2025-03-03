@@ -1,5 +1,6 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Field, Formik } from 'formik';
+
 import * as yup from 'yup';
 
 const SignupSchema = yup.object({
@@ -15,7 +16,8 @@ const SignupSchema = yup.object({
     .oneOf([yup.ref('password')], 'Пароли должны совпадать')
 });
 
-const Signup = () => {
+const Signup = ({ props }) => {
+  const { isSubmit } = props;
 
   return (
     <main className='container-fluid h-100'>

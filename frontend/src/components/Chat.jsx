@@ -1,9 +1,10 @@
 import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
 
 const Chat = ({props}) => {
-  console.log('props', props);
-  const { channels, messages, message, activeChannelId, changeActiveId, handleSubmit, handleMessage } = props;
+  //  console.log('props', props);
+  const { channels, messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage } = props;
   if (!channels) return;
+  console.log('messages:', messages)
   
   const renderListGroup = () =>{
     return channels.map((channel) => (
@@ -11,7 +12,7 @@ const Chat = ({props}) => {
         <Button
           type="button"
           className="w-100 rounded-0 text-start btn btn-secondary"
-          onClick={() => changeActiveId(channel.id)}
+          onClick={() => changeActiveChannelId(channel.id)}
         >
           <span className="me-1">#</span>
           {channel.name}

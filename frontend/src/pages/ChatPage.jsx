@@ -1,55 +1,55 @@
 import { useEffect, useState } from 'react';
-import { io } from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
 
-import { dataRoutes } from '../api/routes';
-import api from '../api/requests';
+import { io } from "socket.io-client";
+//  import { dataRoutes } from '../api/routes';
+//  import api from '../api/requests';
 
 import useAuth from '../hooks';
+import { addMessage, fetchMessages, sendMessage } from '../slices/messagesSlice';
+import { fetchChannels } from '../slices/channelsSlice';
 
 import Chat from '../components/Chat';
-
 const socket = io();
 
 const ChatPage = () => {
   const auth = useAuth(); // todo
 
-  const [channels, setChannels] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [activeChannelId, setActiveId] = useState('1'); // todo
+  const [activeChannelId, setActiveChannelId] = useState('1'); // todo
   const [message, setMessage] = useState('');
 
+  const messages = useSelector((state) => state.messages.messages);
+  const channels = useSelector((state) => state.channels.channels);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const getChannels = async () => {
-      const res = await api('get', dataRoutes.channels());
-      setChannels(res.data);
-    };
-    getChannels();
+    dispatch(fetchChannels());
+    dispatch(fetchMessages());
 
-    const getMessages = async () => {
-      const res = await api('get', dataRoutes.messages());
-      setMessages(res.data);
-    };
-    getMessages();
-  }, []);
+    socket.on('newMessage', (payload) => {
+      console.log('socket addMsg:', payload);
+      dispatch(addMessage(payload));
+    });
+    return () => {
+      socket.off('newMessage');
+    }
 
-  const changeActiveId = (id) => setActiveId(id);
+  }, [dispatch]);
+
+  const changeActiveChannelId = (id) => setActiveChannelId(id);
 
   const handleMessage = (event) => setMessage(event.target.value);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { username } = auth.getUser();
-    console.log('username:', username)
     const newMessage = { body: message, channelId: activeChannelId, username };
-    await api('post', dataRoutes.messages(), newMessage);
+    dispatch(sendMessage(newMessage));
+    setMessage('');
   }
-
-  socket.on('newMessage', (payload) => {
-    setMessages([...messages, payload]);
-  });
-
   return (
-    <Chat  props = {{ channels, messages, message, activeChannelId, changeActiveId, handleSubmit, handleMessage }} />
+    <Chat  props = {{ channels, messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage }} />
   )
 };
 

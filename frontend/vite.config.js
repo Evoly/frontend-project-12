@@ -10,8 +10,13 @@ export default defineConfig({
         target: 'http://0.0.0.0:5001',
         changeOrigin: true,
         secure: false,
-      }
-
+      },
+      '/socket.io': {
+        target: 'http://0.0.0.0:5001',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
     }
   }
 })
