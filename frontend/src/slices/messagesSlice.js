@@ -21,7 +21,7 @@ export const fetchMessages = createAsyncThunk(
 export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (newMessage) => {
-    const response = await api('post', dataRoutes.messages(), newMessage); 
+    const response = await api('post', dataRoutes.messages(), newMessage);
     console.log('fetch', response.data);
     return response.data;
   },
@@ -30,7 +30,7 @@ export const sendMessage = createAsyncThunk(
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
-  reducers: { 
+  reducers: {
     addMessage: (state, action) => {
       console.log('addMessage', action)
       state.messages.push(action.payload);

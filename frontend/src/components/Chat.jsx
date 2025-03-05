@@ -1,10 +1,17 @@
 import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { addMessage, fetchMessages } from '../api/messagesApi';
+import { fetchChannels, addChannel, removeChannel } from '../api/channelsApi';
+
 const Chat = ({props}) => {
   //  console.log('props', props);
-  const { channels, messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage } = props;
+  const { messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage } = props;
+
+  const { data: channels = []} = fetchChannels();
+  console.log('channels:', channels);
   if (!channels) return;
-  console.log('messages:', messages)
   
   const renderListGroup = () =>{
     return channels.map((channel) => (
@@ -23,6 +30,7 @@ const Chat = ({props}) => {
 
 
   const renderMessages = (id) => {
+    console.log('renderMessages id', id, messages)
     const currentMessages = messages.filter((message) => message.channelId === id);
     const channel = channels.find((channel) => channel.id === id);
     if (!channel) return null;

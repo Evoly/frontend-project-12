@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { io } from "socket.io-client";
-//  import { dataRoutes } from '../api/routes';
-//  import api from '../api/requests';
-
 import useAuth from '../hooks';
-import { addMessage, fetchMessages, sendMessage } from '../slices/messagesSlice';
-import { fetchChannels } from '../slices/channelsSlice';
+import { addMessage, fetchMessages,  } from '../api/messagesApi';
+import { fetchChannels, addChannel, removeChannel } from '../api/channelsApi';
 
 import Chat from '../components/Chat';
-const socket = io();
 
 const ChatPage = () => {
   const auth = useAuth(); // todo
@@ -18,24 +13,12 @@ const ChatPage = () => {
   const [activeChannelId, setActiveChannelId] = useState('1'); // todo
   const [message, setMessage] = useState('');
 
-  const messages = useSelector((state) => state.messages.messages);
-  const channels = useSelector((state) => state.channels.channels);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchChannels());
-    dispatch(fetchMessages());
-
-    socket.on('newMessage', (payload) => {
-      console.log('socket addMsg:', payload);
-      dispatch(addMessage(payload));
-    });
-    return () => {
-      socket.off('newMessage');
-    }
-
-  }, [dispatch]);
+  const { data: messages = [], isLoading} = fetchMessages();
+  const [sendMessage] = addMessage();
+  
+  const { data: channels = [] } = fetchChannels();
+  const [remove] = removeChannel();
+  const [sendChannel] = addChannel();
 
   const changeActiveChannelId = (id) => setActiveChannelId(id);
 
@@ -45,11 +28,13 @@ const ChatPage = () => {
     event.preventDefault();
     const { username } = auth.getUser();
     const newMessage = { body: message, channelId: activeChannelId, username };
-    dispatch(sendMessage(newMessage));
+    console.log('sendMessage:', sendMessage, newMessage);
+    sendMessage(newMessage).unwrap();
     setMessage('');
-  }
+  };
+
   return (
-    <Chat  props = {{ channels, messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage }} />
+    <Chat props={{messages, message, activeChannelId, changeActiveChannelId, handleSubmit, handleMessage }} />
   )
 };
 
