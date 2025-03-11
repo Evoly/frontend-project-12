@@ -37,7 +37,7 @@ const MyModal = () => {
 
   const CurrentModal = types[type];
 
-  return (type && <CurrentModal id={id} show={show} handleSubmit={handleSubmit} handleClose= {handleClose} title={title} channels = {channels} />);
+  return (type && <CurrentModal id={id} show={show} handleSubmit={handleSubmit} handleClose= {handleClose} title={title} channels = {channels} type={type}/>);
 }
 
 export default MyModal;

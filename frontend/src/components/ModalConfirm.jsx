@@ -1,22 +1,31 @@
 import { Button, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 
-const ModalConfirm = ({ handleSubmit, show, title, handleClose }) => {
 
+const ModalConfirm = ({ handleSubmit, show, handleClose }) => {
+
+  const { t } = useTranslation();
   return (
     <>
-      <Modal show={show} size="lg" centered onHide={handleClose}>
+      <Modal show={show} size="sm" centered onHide={handleClose}>
         <Modal.Header closeButton className='text-center'>
-          <Modal.Title className='w-100'>{title}</Modal.Title>
+          <Modal.Title className='w-100'>{t('modal.removeChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div> are you sure ?</div>
-          <Form noValidate className='py-1 ' onSubmit={handleSubmit}>
-            <Button variant="primary" type='submit' className='d-block m-auto' >
-              Save Changes
+          <div className='text-center'>{t('modal.confirmText')}</div>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Form noValidate className='py-1 d-flex flex-wrap justify-content-end gap-3' onSubmit={handleSubmit}>
+            <Button variant="secondary" type='reset' onClick={() => handleClose()}>
+              {t('modal.cancelButton')}
+            </Button>
+            <Button variant="primary" type='submit'>
+              {t('modal.removeButton')}
             </Button>
           </Form>
-        </Modal.Body>
+        </Modal.Footer>
       </Modal>
     </>
   );
