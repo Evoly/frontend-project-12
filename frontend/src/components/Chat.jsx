@@ -1,25 +1,55 @@
-import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
+import { useState } from 'react';
+import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup, Dropdown, Modal, ButtonGroup } from 'react-bootstrap';
+import ModalSendData from './ModalSendData';
+import ModalConfirm from './ModalConfirm';
+import MyModal from './Modal';
 
 const Chat = ({props}) => {
-  console.log('props', props);
-  const { channels, messages, message, activeChannelId, changeActiveId, handleSubmit, handleMessage } = props;
+  //  console.log('props', props);
+  const { channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal } = props;
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   if (!channels) return;
-  
+
+  const channelName = (id, name) => (
+    <Button
+      variant="secondary"
+      type="button"
+      className="w-100 rounded-0 text-start btn btn-secondary"
+      onClick={() => changeCurrentChannel(id)}
+    > # {name}
+    </Button>
+  );
+
+  const renderDropdown = (name, id) => {
+    return (
+      <Dropdown as={ButtonGroup} className='w-100 '>
+        {channelName(id, name)}
+        <Dropdown.Toggle split variant="secondary" id={id} key='down' className='text-end rounded-0'> 
+          <span className="visually-hidden">Управление каналом</span>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => handleModal({ id, type: 'removeChannel'})} >Удалить</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleModal({ id, type: 'renameChannel' })}>Переименовать</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
+
   const renderListGroup = () =>{
-    return channels.map((channel) => (
-      <ListGroupItem key={channel.id} as="li" className="w-100 p-0">
-        <Button
-          type="button"
-          className="w-100 rounded-0 text-start btn btn-secondary"
-          onClick={() => changeActiveId(channel.id)}
-        >
-          <span className="me-1">#</span>
-          {channel.name}
-        </Button>
+    return channels.map(({id, name, removable}) => (
+      <ListGroupItem key={id} as="li" className="w-100 p-0">
+        {removable 
+        ? renderDropdown(name, id)
+        : channelName(id, name)}
       </ListGroupItem>
     ));
   };
-
 
   const renderMessages = (id) => {
     const currentMessages = messages.filter((message) => message.channelId === id);
@@ -49,6 +79,7 @@ const Chat = ({props}) => {
         <Col col={4} md={2} className='border-end px-0 bg-light flex-column h-100 d-flex'>
           <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4"><b>Каналы</b>
             <Button
+              onClick={() => handleModal({ type: 'addChannel' })}
               variant=''
               type="button"
               className="p-0 text-primary btn-group-vertical">
@@ -73,7 +104,7 @@ const Chat = ({props}) => {
         </Col>
         <Col className='p-0 h-100'>
           <div className="d-flex flex-column h-100">
-            {renderMessages(activeChannelId)}
+            {renderMessages(currentChannelId)}
             <div className="mt-auto px-5 py-3">
               <Form noValidate className='py-1 border rounded-2' onSubmit={handleSubmit}>
                 <InputGroup>
@@ -106,6 +137,7 @@ const Chat = ({props}) => {
         </Col>
 
       </Row>
+      <MyModal title={'Remove channel'} />
     </main>
   )
 };
