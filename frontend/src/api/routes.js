@@ -7,5 +7,6 @@ export const userRoutes = {
 
 export const dataRoutes = {
   channels: () => [apiPath, 'channels'].join('/'),
+  channel: (id) => [apiPath, 'channels', id].join('/'),
   messages: () => [apiPath, 'messages'].join('/'),
 };

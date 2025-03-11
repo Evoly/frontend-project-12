@@ -9,9 +9,13 @@
     "license": "ISC",
     "author": "Svetlana Semenko",
     "scripts": {
-        "start": ""
+        "server": "npx start-server",
+        "frontend": "cd frontend/ && npm run dev",
+        "start:all": "concurrently \"npm run server\" \"npm run frontend\""
     },
     "dependencies": {
-        "@hexlet/chat-server": "^2.0.4"
+        "@hexlet/chat-server": "^2.0.4",
+        "concurrently": "^9.1.2",
+        "react-redux": "^9.2.0"
     }
 }

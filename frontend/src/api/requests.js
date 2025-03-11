@@ -16,6 +16,8 @@ const api = async (method, url, data = {}) => {
   const request = {
     post: async () => await instance.post(url, data),
     get: async () => await instance.get(url),
+    delete: async () => await instance.delete(url),
+    patch: async () => await instance.patch(url, data),
   }
 
   const response = await request[method]();

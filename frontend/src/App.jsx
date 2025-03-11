@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 import useAuth from './hooks/index.js';
 import AuthContext from './context/index.js';
-import { userRoutes } from './api/routes.js';
 
 import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
@@ -41,8 +40,6 @@ const PrivateRoute = ({ children }) => {
 
 
 const App = () => {
-
-
   return (
     <AuthProvider>
       <>
