@@ -10,8 +10,12 @@ export default defineConfig({
         target: 'http://0.0.0.0:5001',
         changeOrigin: true,
         secure: false,
-      }
-
+      },
+      '/socket.io': {
+        target: 'ws://localhost:5001',
+        ws: true,
+        rewriteWsOrigin: true,
+      },
     }
   }
-})
+});
