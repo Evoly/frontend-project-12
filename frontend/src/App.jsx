@@ -41,7 +41,7 @@ const PrivateRoute = ({ children }) => {
 
   return auth.loggedIn ? children : <Navigate to="/login" />
 }
-
+/*
 i18n
   .use(initReactI18next)
   // init i18next
@@ -55,7 +55,7 @@ i18n
     }
   });
 
-
+*/
 const App = () => {
   return (
     <AuthProvider>
