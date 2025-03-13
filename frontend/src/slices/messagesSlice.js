@@ -26,7 +26,7 @@ export const fetchMessages = createAsyncThunk(
   },
 );
 
-export const addMessage = createAsyncThunk(
+export const sendMessage = createAsyncThunk(
   'messages/addMessage',
   async (newMessage) => {
     const response = await api('post', dataRoutes.messages(), newMessage);    
@@ -37,7 +37,11 @@ export const addMessage = createAsyncThunk(
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
-  reducers: { },
+  reducers: {
+    addMessage: (state, action) => {
+      state.messages.push(action.payload);
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.pending, (state) => handleLoading(state))
@@ -46,14 +50,9 @@ const messagesSlice = createSlice({
         state.messages = action.payload;
       })
       .addCase(fetchMessages.rejected, (state, action) => handleFailed(state, action))
-      .addCase(addMessage.fulfilled, (state, action) => {
-        state.loadingStatus = 'idle';
-        state.messages.push(action.payload);
-        state.error = null;
-      })
-      .addCase(addMessage.rejected, (state, action) => handleFailed(state, action))
-
+      .addCase(sendMessage.rejected, (state, action) => handleFailed(state, action))
   },
 });
 
+export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
