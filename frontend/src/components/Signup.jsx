@@ -1,21 +1,9 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import { Field, Formik } from 'formik';
-import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
-const SignupSchema = yup.object({
-  username: yup.string()
-    .min(3, 'От 3 до 20 символо')
-    .max(20, 'От 3 до 20 символо')
-    .required('Обязательное поле'),
-  password: yup.string()
-    .min(6, 'Не менее 6 символов')
-    .required('Обязательное поле'),
-  confirmPassword: yup.string()
-    .required('Обязательное поле')
-    .oneOf([yup.ref('password')], 'Пароли должны совпадать')
-});
-
-const Signup = () => {
+const Signup = ({ props }) => {
+  const { isLoginFailed, isSubmitted, formik } = props;
+  const { t } = useTranslation();
 
   return (
     <main className='container-fluid h-100'>
@@ -26,51 +14,55 @@ const Signup = () => {
               <img className="rounded-circle" src="./public/img-1.jpg" alt="Войти" />
             </div>
             <div className='col-12 col-md-6 mt-3 mt-md-0 text-center p-4'>
-              <h1>Регистрация</h1>
-              <Formik
-                initialValues={{ username: "", password: "", confirmPassword: ""}}
-                validationSchema={SignupSchema}
-                onSubmit={values => {
-                  console.log(values);
-                }}
-              >
-                {({ errors, touched }) => (
-                  <Form className='mb-4' noValidate>
+              <h1>{t('forms.registrationTitle')}</h1>
+                  <Form className='mb-4' onSubmit={formik.handleSubmit}>
                     <Form.Group className="form-floating mb-3" controlId="username">
-                      <Field
+                      <Form.Control
                         type="text"
-                        placeholder="От 3 до 20 символов"
                         name="username"
                         autoComplete="username"
                         required=""
-                        className={errors.username && touched.username ? 'form-control is-invalid' : 'form-control'}
+                        placeholder={t('forms.registrationName')}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.username}
+                        className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''}
                         />
-                      <Form.Label className="form-label">Имя пользователя</Form.Label>
-                      {errors.username && touched.username ? (<div className="invalid-tooltip">{errors.username}</div>) : null}
+                    <Form.Label className="form-label">{t('forms.registrationName')}</Form.Label>
+                      {formik.errors.username && formik.touched.username ? (<div className="invalid-tooltip">{formik.errors.username}</div>) : null}
                     </Form.Group>
                     <Form.Group className="form-floating mb-3" controlId="password">
-                      <Field placeholder="Не менее 6 символов" name="password"
-                        aria-describedby="passwordHelpBlock" required="" autoComplete="new-password" type="password"
-                        className={errors.password && touched.password ? 'form-control is-invalid' : 'form-control'}
+                      <Form.Control
+                        name="password"
+                        aria-describedby="passwordHelpBlock"
+                        required="" autoComplete="new-password"
+                        type="password"
+                        placeholder={t('forms.password')}
+                        className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    value={formik.values.password}
                       />
-                      <Form.Label className="form-label">Пароль</Form.Label>
-                      {errors.password && touched.password ? (<div className="invalid-tooltip">{errors.password}</div>) : null}
+                  <Form.Label className="form-label">{t('forms.password')}</Form.Label>
+                      {formik.errors.password && formik.touched.password ? (<div className="invalid-tooltip">{formik.errors.password}</div>) : null}
                     </Form.Group>
                     <Form.Group className="form-floating mb-3" controlId="confirmPassword">
-                      <Field placeholder="Пароли должны совпадать" name="confirmPassword"
-                        aria-describedby="passwordHelpBlock" required="" autoComplete="new-password" type="password"
-                        className={errors.confirmPassword && touched.confirmPassword ? 'form-control is-invalid' : 'form-control'}
+                      <Form.Control
+                        type="password"
+                        name="confirmPassword"
+                        aria-describedby="passwordHelpBlock" 
+                        required="" autoComplete="new-password"
+                        placeholder={t('forms.confirmPassword')}
+                        className={formik.errors.confirmPassword && formik.touched.confirmPassword ? 'is-invalid' : ''}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.confirmPassword}
                       />
-                      <Form.Label className="form-label">Подтвердите пароль</Form.Label>
-                      {errors.confirmPassword && touched.confirmPassword ? (<div className="invalid-tooltip">{errors.confirmPassword}</div>) : null}
+                  <Form.Label className="form-label">{t('forms.confirmPassword')}</Form.Label>
+                      {formik.errors.confirmPassword && formik.touched.confirmPassword ? (<div className="invalid-tooltip">{formik.errors.confirmPassword}</div>) : null}
                     </Form.Group>
-                    <Button className='w-100 mb-3 btn btn-primary' type="submit">Зарегистрироваться</Button>
-                    <div>{JSON.stringify(errors)}</div>
-                    <div>{JSON.stringify(touched)}</div>
-                    <div>{errors.email}</div>
+                <Button className='w-100 mb-3 btn btn-primary' type="submit">{t('forms.registrationButton')}</Button>
                   </Form>
-                )}
-              </Formik>
             </div>
           </div>
         </Col>

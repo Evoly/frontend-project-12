@@ -2,7 +2,7 @@ export const apiPath = '/api/v1';
 
 export const userRoutes = {
   loginPath: () => [apiPath, 'login'].join('/'),
-  usersPath: () => [apiPath, 'data'].join('/'),
+  signupPath: () => [apiPath, 'signup'].join('/'),
 };
 
 export const dataRoutes = {

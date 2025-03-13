@@ -1,5 +1,3 @@
-import channels from "@hexlet/chat-server/src/routes/channels";
-
 const ru = {
   translation: {
     modal: {
@@ -18,6 +16,21 @@ const ru = {
     },
     validation: {
       required: 'Обязательное поле',
+      signup: {
+        passwordLength: 'Не менее 6 символов',
+        repeatPassword: 'Подтвердите пароль',
+        notConfirmPassword: 'Пароли должны совпадать',
+        signUpBtn: 'Зарегистрироваться',
+        nameLength: 'От 3 до 20 символов',
+      }
+    },
+    forms: {
+      registrationTitle: 'Регистрация',
+      name: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      registrationButton: 'Зарегистрироваться'
+
     }
   },
 };
