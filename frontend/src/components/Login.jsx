@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Login = ({ props }) => {
   const { isLoginFailed, isSubmitted, formik } = props;
+  const { t } = useTranslation();
   
   return (
     <main className='container-fluid h-100'>
@@ -14,42 +16,43 @@ const Login = ({ props }) => {
               <img className="rounded-circle" src="./public/img-1.jpg" alt="Войти" />
             </div>
             <div className='col-12 col-md-6 mt-3 mt-md-0 text-center p-4'>
-              <h1>Войти</h1>
+              <h1>{t('forms.authTitle')}</h1>
               <Form className='mb-4' onSubmit={formik.handleSubmit}>
                   <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
                       type = 'text'
-                      className={isLoginFailed && isSubmitted ? 'is-invalid' : ''}
-                      placeholder="Ваш ник"
+                      className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''}
                       name="username"
                       autoComplete="username"
                       required=""
+                      placeholder={t('forms.authName')}
                       onChange={formik.handleChange}
                       value={formik.values.username}
                     />                
-                    <Form.Label>Ваш ник</Form.Label>
+                  <Form.Label>{t('forms.authName')}</Form.Label>
+                  {formik.errors.username && formik.touched.username ? (<div className="invalid-tooltip">{formik.errors.username}</div>) : null}
                   </Form.Group>
                   <Form.Group className="form-floating mb-4" controlId="password">
                   <Form.Control
                       type='password'
-                      className={isLoginFailed && isSubmitted ? 'is-invalid' : ''}
-                      placeholder="Пароль"
+                    className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''}
                       name="password"
                       autoComplete="current-password"
                       required=""
+                      placeholder={t('forms.password')}
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                    />    
-                    <Form.Label>Пароль</Form.Label>
-                    {isLoginFailed && isSubmitted ? (<div className="invalid-tooltip">Неверные имя пользователя или пароль</div>) : null}
+                    />
+                  {formik.errors.password && formik.touched.password ? (<div className="invalid-tooltip">{formik.errors.password}</div>) : null}
+                  <Form.Label>{t('forms.password')}</Form.Label>
                   </Form.Group>
-                  <Button className='w-100 mb-3 btn btn-primary' type="submit">Войти</Button>
+                <Button className='w-100 mb-3 btn btn-primary' type="submit">{t('forms.authButton')}</Button>
                 {isLoginFailed && <div>the username or password is incorrect.</div>}
                 </Form>
             </div>
             <div className='col-12 shadow-sm text-center p-3 bg-light'>
-              <span>Нет аккаунта? </span>
-              <Link to="/signup"> Регистрация</Link>
+              <span>{t('forms.notAccount')} </span>
+              <Link to="/signup">{t('forms.signup')} </Link>
             </div>
 
           </div>

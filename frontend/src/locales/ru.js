@@ -26,11 +26,15 @@ const ru = {
     },
     forms: {
       registrationTitle: 'Регистрация',
-      name: 'Имя пользователя',
+      registrationName: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
-      registrationButton: 'Зарегистрироваться'
-
+      registrationButton: 'Зарегистрироваться',
+      authTitle: 'Войти',
+      authButton: 'Войти',
+      authName: 'Ваш ник',
+      signup: 'Регистрация',
+      notAccount: 'Нет аккаунта?',
     }
   },
 };
