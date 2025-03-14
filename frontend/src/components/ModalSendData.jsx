@@ -10,10 +10,10 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
 
   const schema = yup.object({
     name: yup.string()
-      .min(3, t('channelsValidation.length'))
-      .max(20, t('channelsValidation.length'))
+      .min(3, t('validation.channelsValidation.length'))
+      .max(20, t('validation.channelsValidation.length'))
       .required(t('validation.required'))
-      .test('is name uniq', t('channelsValidation.duplicate'), (val) => !channels.some(({ name }) => name === val)),
+      .test('is name uniq', t('validation.channelsValidation.duplicate'), (val) => !channels.some(({ name }) => name === val)),
   });
   const formik = useFormik({
     initialValues: {
@@ -35,7 +35,7 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
     ? 'is-invalid p-2 ps-1 border rounded-2 mb-2'
     : 'p-1 ps-2 border rounded-2 mb-3';
 
-  const title = `modal.${type}`; // todo
+  const title = `modal.${type}`;
 
   return (
     <>
