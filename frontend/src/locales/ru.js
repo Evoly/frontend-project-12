@@ -10,9 +10,16 @@ const ru = {
       removeButton: 'Удалить',
       renameChannel: 'Переименовать канал',
     },
-    channelsValidation: {
-      duplicate: 'Канал с таким именем уже существует',
-      length: 'От 3 до 20 символов',
+    channel: {
+      addChannelPending: 'Создание канала...',
+      addChannelFulfilled: 'Канал создан',
+      addChannelRejected: 'Ошибка при создании канала',
+      removeChannelPending: 'Удаление канала...',
+      removeChannelFulfilled: 'Канал удален',
+      removeChannelRejected: 'Ошибка при удалении канала',
+      renameChannelPending: 'Переименование канала...',
+      renameChannelFulfilled: 'Канал переименован',  
+      renameChannelRejected: 'Ошибка при переименовании канала',
     },
     validation: {
       required: 'Обязательное поле',
@@ -22,7 +29,11 @@ const ru = {
         notConfirmPassword: 'Пароли должны совпадать',
         signUpBtn: 'Зарегистрироваться',
         nameLength: 'От 3 до 20 символов',
-      }
+      },
+      channelsValidation: {
+        duplicate: 'Канал с таким именем уже существует',
+        length: 'От 3 до 20 символов',
+      },
     },
     forms: {
       registrationTitle: 'Регистрация',

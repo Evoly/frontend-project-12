@@ -1,17 +1,10 @@
 import { useState } from 'react';
-import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup, Dropdown, Modal, ButtonGroup } from 'react-bootstrap';
-import ModalSendData from './ModalSendData';
-import ModalConfirm from './ModalConfirm';
+import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup, Dropdown, ButtonGroup } from 'react-bootstrap';
 import MyModal from './Modal';
 
+
 const Chat = ({props}) => {
-  //  console.log('props', props);
   const { channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal } = props;
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   if (!channels) return;
 
@@ -19,7 +12,7 @@ const Chat = ({props}) => {
     <Button
       variant="secondary"
       type="button"
-      className="w-100 rounded-0 text-start btn btn-secondary"
+      className="w-100 rounded-0 text-start btn btn-secondary text-truncate"
       onClick={() => changeCurrentChannel(id)}
     > # {name}
     </Button>

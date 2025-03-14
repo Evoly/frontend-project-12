@@ -1,9 +1,5 @@
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import { useState } from 'react';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-import resources from './locales/index.js';
 
 import useAuth from './hooks/index.js';
 import AuthContext from './context/index.js';
@@ -41,21 +37,7 @@ const PrivateRoute = ({ children }) => {
 
   return auth.loggedIn ? children : <Navigate to="/login" />
 }
-/*
-i18n
-  .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
-  .init({
-    fallbackLng: 'ru',
-    debug: true,
-    resources,
-    interpolation: {
-      escapeValue: false // react already safes from xss
-    }
-  });
 
-*/
 const App = () => {
   return (
     <AuthProvider>

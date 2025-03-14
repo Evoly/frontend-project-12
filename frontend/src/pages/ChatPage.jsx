@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from 'react-toastify';
 
 import socket from '../api/socket';
 import useAuth from '../hooks';
@@ -8,7 +9,6 @@ import { fetchChannels } from '../slices/channelsSlice';
 import { setOpen } from '../slices/modalSlice';
 
 import Chat from '../components/Chat';
-
 
 const ChatPage = () => {
   const auth = useAuth(); // todo
@@ -48,7 +48,10 @@ const ChatPage = () => {
   const handleModal = (id, type) => dispatch(setOpen(id, type));
 
   return (
-    <Chat props={{ channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal }} />
+    <>
+      <Chat props={{ channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal }} />
+      <ToastContainer />
+    </>    
   )
 };
 
