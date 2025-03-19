@@ -11,7 +11,8 @@
     "scripts": {
         "server": "npx start-server",
         "frontend": "cd frontend/ && npm run dev",
-        "start:all": "concurrently \"npm run server\" \"npm run frontend\""
+        "start:all": "concurrently \"npm run server\" \"npm run frontend\"",
+        "build": "cd frontend/ && npm run build"
     },
     "dependencies": {
         "@hexlet/chat-server": "^2.0.4",
