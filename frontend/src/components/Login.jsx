@@ -4,51 +4,53 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 const Login = ({ props }) => {
-  const { isLoginFailed, isSubmitted, formik } = props;
+  const { isAuthFailed,  formik, err } = props;
   const { t } = useTranslation();
-  
+
   return (
     <main className='container-fluid h-100'>
       <Row className='row justify-content-center align-content-center h-100'>
         <Col className='col-12 col-md-8 '>
-          <div className='shadow-sm row ' style={{ backgroundColor: 'var(--bs-body-bg)'}}>
+          <div className='shadow-sm row ' style={{ backgroundColor: 'var(--bs-body-bg)' }}>
             <div className='d-flex col-12 col-md-6 justify-content-center align-content-center p-5'>
               <img className="rounded-circle" src="./public/img-1.jpg" alt="Войти" />
             </div>
             <div className='col-12 col-md-6 mt-3 mt-md-0 text-center p-4'>
               <h1>{t('forms.authTitle')}</h1>
               <Form className='mb-4' onSubmit={formik.handleSubmit}>
-                  <Form.Group className="form-floating mb-3" controlId="username">
+                <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
-                      type = 'text'
-                      className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''}
-                      name="username"
-                      autoComplete="username"
-                      required=""
-                      placeholder={t('forms.authName')}
-                      onChange={formik.handleChange}
-                      value={formik.values.username}
-                    />                
+                    type='text'
+                    className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''}
+                    name="username"
+                    autoComplete="username"
+                    required=""
+                    placeholder={t('forms.authName')}
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    isInvalid={err === 401 || formik.errors.username && formik.touched.username}
+                  />
                   <Form.Label>{t('forms.authName')}</Form.Label>
-                  {formik.errors.username && formik.touched.username ? (<div className="invalid-tooltip">{formik.errors.username}</div>) : null}
-                  </Form.Group>
-                  <Form.Group className="form-floating mb-4" controlId="password">
+                  {formik.errors.username && <Form.Control.Feedback type="invalid" tooltip>{formik.errors.username}</Form.Control.Feedback>}
+                </Form.Group>
+                <Form.Group className="form-floating mb-4" controlId="password">
                   <Form.Control
-                      type='password'
+                    type='password'
                     className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''}
-                      name="password"
-                      autoComplete="current-password"
-                      required=""
-                      placeholder={t('forms.password')}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                  {formik.errors.password && formik.touched.password ? (<div className="invalid-tooltip">{formik.errors.password}</div>) : null}
+                    name="password"
+                    autoComplete="current-password"
+                    required=""
+                    placeholder={t('forms.password')}
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    isInvalid={err === 401 || formik.errors.password && formik.touched.password}
+                  />
                   <Form.Label>{t('forms.password')}</Form.Label>
-                  </Form.Group>
+                  {formik.errors.password && <Form.Control.Feedback type="invalid" tooltip>{formik.errors.password}</Form.Control.Feedback>}
+                </Form.Group>
                 <Button className='w-100 mb-3 btn btn-primary' type="submit">{t('forms.authButton')}</Button>
-                {isLoginFailed && <div>the username or password is incorrect.</div>}
-                </Form>
+                {err === 401 && <div className="text-danger mb-2">{t('errors.401')}</div>}
+              </Form>
             </div>
             <div className='col-12 shadow-sm text-center p-3 bg-light'>
               <span>{t('forms.notAccount')} </span>

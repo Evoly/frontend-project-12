@@ -13,6 +13,7 @@ import ChatPage from './pages/ChatPage';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
+  const [authError, setError] = useState('');
 
   const logIn = () => setLoggedIn(true);
 
@@ -25,8 +26,10 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
 
+  const updateAuthError = (err) => setError(err);
+
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut, addUser, getUser }}>
+    <AuthContext.Provider value={{ loggedIn, logIn, logOut, addUser, getUser, authError, updateAuthError }}>
       {children}
     </AuthContext.Provider>
   )

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import useAuth from '../hooks';
 import { userRoutes } from '../api/routes';
@@ -11,8 +12,7 @@ import api from '../api/requests';
 import Signup from '../components/Signup';
 
 const SignupPage = () => {
-  const [isSubmitted, setSubmitted] = useState(false);
-  const [isRegistartionFailed, setRegistrationFailed] = useState(false);
+  const [isAuthFailed, setIsAuthFailed] = useState(false);
 
   const navigate = useNavigate();
   const auth = useAuth();
@@ -41,7 +41,8 @@ const SignupPage = () => {
     validationSchema: schema,
     validateOnChange: true,
     onSubmit: async (values) => {
-      setSubmitted(true);
+      auth.updateAuthError(null)
+      setIsAuthFailed(false);
       try {
         const res = await api('post', userRoutes.signupPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
@@ -50,13 +51,16 @@ const SignupPage = () => {
         auth.addUser({ username });
         navigate('/');
       } catch (err) {
-        setRegistrationFailed(true);
-        console.log('err', err.message);
+        setIsAuthFailed(true);
+        const authError = err.status ?? err.code;
+        auth.updateAuthError(authError);
+        if (authError === 409) return;
+        toast.error(t([`errors.${authError}`, `errors.default`]));
       }
     },
   });
 
-  return <Signup props={{ isRegistartionFailed, isSubmitted, formik }}></Signup>
+  return <Signup props={{ isAuthFailed, err: auth.authError, formik }}></Signup>
 };
 
 export default SignupPage;
