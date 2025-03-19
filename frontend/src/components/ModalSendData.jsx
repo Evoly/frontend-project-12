@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 import { Button, Form, Modal } from 'react-bootstrap';
 
@@ -8,12 +9,16 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
 
   const { t } = useTranslation();
 
+  filter.add(filter.getDictionary('ru'));
+
   const schema = yup.object({
     name: yup.string()
       .min(3, t('validation.channelsValidation.length'))
       .max(20, t('validation.channelsValidation.length'))
       .required(t('validation.required'))
-      .test('is name uniq', t('validation.channelsValidation.duplicate'), (val) => !channels.some(({ name }) => name === val)),
+      .test('is name uniq', t('validation.channelsValidation.duplicate'), (val) => !channels.some(({ name }) => name === val))
+      .test('profanity', t('validation.channelsValidation.profanity'), (val) => filter.badWordsUsed(val).length < 1),
+      
   });
   const formik = useFormik({
     initialValues: {
@@ -23,6 +28,7 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
     validationSchema: schema,
     validateOnChange: true,
     onSubmit: async (values) => {
+      console.log(filter.badWordsUsed(values.name))
       try {
         await handleSubmit(values);    
       } catch (err) {

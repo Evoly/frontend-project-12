@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import filter from 'leo-profanity';
 
 import socket from '../api/socket';
 import useAuth from '../hooks';
@@ -11,7 +12,9 @@ import Chat from '../components/Chat';
 
 const ChatPage = () => {
   const auth = useAuth(); // todo
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
+
+  filter.add(filter.getDictionary('ru'));
 
   const [currentChannelId, setCurrentChannelID] = useState('1'); // todo
   const [message, setMessage] = useState('');
@@ -53,9 +56,9 @@ const ChatPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { username } = auth.getUser();
-
+    const filteredMessage = filter.clean(message);
     //socket.emit('newMessage', { body: message, channelId: currentChannelId, username });
-    dispatch(sendMessage({ body: message, channelId: currentChannelId, username }));
+    dispatch(sendMessage({ body: filteredMessage, channelId: currentChannelId, username }));
     setMessage('');
   };
 

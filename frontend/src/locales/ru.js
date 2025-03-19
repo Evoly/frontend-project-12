@@ -33,6 +33,7 @@ const ru = {
       channelsValidation: {
         duplicate: 'Канал с таким именем уже существует',
         length: 'От 3 до 20 символов',
+        profanity: 'Так себе название'
       },
     },
     forms: {
