@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from 'react-toastify';
 
 import socket from '../api/socket';
 import useAuth from '../hooks';
 import { addMessage, fetchMessages, sendMessage } from '../slices/messagesSlice';
-import { fetchChannels } from '../slices/channelsSlice';
+import { addChannel, fetchChannels, removeChannel, renameChannel } from '../slices/channelsSlice';
 import { setOpen } from '../slices/modalSlice';
 
 import Chat from '../components/Chat';
@@ -27,9 +26,24 @@ const ChatPage = () => {
 
   useEffect(() => {
     socket.on('newMessage', (message) => {
+      console.log('message', message)
       dispatch(addMessage(message));
     });
-    return () => socket.off('newMessage');
+    socket.on('renameChannel', (message) => {
+      dispatch(renameChannel(message));
+    });
+    socket.on('newChannel', (message) => {
+      dispatch(addChannel(message));
+    });
+    socket.on('removeChannel', (message) => {
+      dispatch(removeChannel(message));
+    });
+    return () => {
+      socket.off('newMessage');
+      socket.off('renameChannel');
+      socket.off('newChannel');
+      socket.off('removeChannel');
+    };
   }, [dispatch])
 
 
@@ -50,7 +64,6 @@ const ChatPage = () => {
   return (
     <>
       <Chat props={{ channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal }} />
-      <ToastContainer />
     </>    
   )
 };

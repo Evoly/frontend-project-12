@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ModalConfirm from './ModalConfirm';
 import ModalSendData from './ModalSendData';
 
-import { removeChannel, addChannel, renameChannel } from '../slices/channelsSlice';
+import { removeChannelRequest, addChannelRequest, renameChannelRequest } from '../slices/channelsSlice';
 import { setClose } from '../slices/modalSlice';
 
 
@@ -16,9 +16,9 @@ const types = {
 };
 
 const actions = {
-  removeChannel: removeChannel,
-  addChannel: addChannel,
-  renameChannel: renameChannel,
+  removeChannel: removeChannelRequest,
+  addChannel: addChannelRequest,
+  renameChannel: renameChannelRequest,
 };
 
 const MyModal = () => {

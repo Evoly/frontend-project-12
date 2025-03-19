@@ -26,7 +26,7 @@ export const fetchChannels = createAsyncThunk(
   },
 );
 
-export const addChannel = createAsyncThunk(
+export const addChannelRequest = createAsyncThunk(
   'channels/addChannel',
   async ({name}) => {
     const response = await api('post', dataRoutes.channels(), {name});
@@ -34,7 +34,7 @@ export const addChannel = createAsyncThunk(
   },
 );
 
-export const removeChannel = createAsyncThunk(
+export const removeChannelRequest = createAsyncThunk(
   'channels/removeChannel',
   async ({id}) => {
     console.log('id remove', id)
@@ -44,7 +44,7 @@ export const removeChannel = createAsyncThunk(
   },
 );
 
-export const renameChannel = createAsyncThunk(
+export const renameChannelRequest = createAsyncThunk(
   'channels/renameChannel',
   async ({id, name}) => {
     const response = await api('patch', dataRoutes.channel(id), {name});
@@ -55,7 +55,18 @@ export const renameChannel = createAsyncThunk(
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
-  reducers: {},
+  reducers: {
+    renameChannel: (state, action) => {
+      const channel = state.channels.find(({ id }) => id == action.payload.id);
+      channel.name = action.payload.name;
+    },
+    addChannel: (state, action) => {
+      state.channels.push(action.payload)
+    },
+    removeChannel: (state, action) => {
+      state.channels = state.channels.filter(({ id }) => id !== action.payload.id);
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.pending, (state) => handleLoading(state))
@@ -64,30 +75,14 @@ const channelsSlice = createSlice({
         state.channels = action.payload;
       })
       .addCase(fetchChannels.rejected, (state, action) => handleFailed(state, action))
-      .addCase(addChannel.pending, (state) => handleLoading(state))
-      .addCase(addChannel.fulfilled, (state, action) => {
-        state.channels.push(action.payload)
-        state.loadingStatus = 'idle';
-        state.error = null;
-      })
-      .addCase(addChannel.rejected, (state, action) => handleFailed(state, action))
-      .addCase(removeChannel.pending, (state) => handleLoading(state))
-      .addCase(removeChannel.fulfilled, (state, action) => {
-        state.channels = state.channels.filter(({ id }) => id !== action.payload.id);
-        state.loadingStatus = 'idle';
-        state.error = null;
-      })
-      .addCase(removeChannel.rejected, (state, action) => handleFailed(state, action))
-      .addCase(renameChannel.pending, (state) => handleLoading(state))
-      .addCase(renameChannel.fulfilled, (state, action) => {
-        console.log('data rename:', action.payload);
-        const channel = state.channels.find(({ id }) => id == action.payload.id);
-        channel.name = action.payload.name;
-        state.loadingStatus = 'idle';
-        state.error = null;
-      })
-      .addCase(renameChannel.rejected, (state, action) => handleFailed(state, action))
+      .addCase(addChannelRequest.pending, (state) => handleLoading(state))
+      .addCase(addChannelRequest.rejected, (state, action) => handleFailed(state, action))
+      .addCase(removeChannelRequest.pending, (state) => handleLoading(state))
+      .addCase(removeChannelRequest.rejected, (state, action) => handleFailed(state, action))
+      .addCase(renameChannelRequest.pending, (state) => handleLoading(state))
+      .addCase(renameChannelRequest.rejected, (state, action) => handleFailed(state, action))
   },
 });
 
+export const { renameChannel, removeChannel, addChannel } = channelsSlice.actions;
 export default channelsSlice.reducer;
