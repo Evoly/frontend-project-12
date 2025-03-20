@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <header className='shadow-sm bg-white '>
-      <Navbar className=' navbar navbar-expand-lg navbar-light container'>
+      <Navbar className=' navbar-expand-lg container justify-content-between'>
         <Link to="/" className='navbar-brand'>Hexlet Chat</Link>
         {auth.loggedIn && <RenderLogOut />}
       </Navbar>
