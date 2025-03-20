@@ -9,10 +9,10 @@
     "license": "ISC",
     "author": "Svetlana Semenko",
     "scripts": {
-        "server": "npx start-server",
+        "server": "start-server -s frontend/dist",
         "frontend": "cd frontend/ && npm run dev",
         "start:all": "concurrently \"npm run server\" \"npm run frontend\"",
-        "build": "cd frontend/ && npm run build"
+        "build": "cd frontend/ && npm install && npm run build"
     },
     "dependencies": {
         "@hexlet/chat-server": "^2.0.4",
