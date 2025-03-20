@@ -21,7 +21,7 @@ const actions = {
   renameChannel: renameChannelRequest,
 };
 
-const MyModal = () => {
+const MyModal = ({ changeCurrentChannel }) => {
   const { type, show, id } = useSelector((state) => state.modal);
   const { channels } = useSelector((state) => state.channels)
   
@@ -50,14 +50,19 @@ const MyModal = () => {
     const data = {...val, id};
     const toastId = toast.loading(messages[type].loading);
     try {
-      await dispatch(actions[type](data)).unwrap();
+      const { id } = await dispatch(actions[type](data)).unwrap();
       toast.update(toastId, {
         render: messages[type].success,
         type: 'success',
         isLoading: false,
         autoClose: 2000,
       });
+      if (type === 'addChannel') {
+        changeCurrentChannel(id);
+      }
+      
     } catch (error) {
+      console.log('error', error)
       toast.update(toastId, {
         render: messages[type].error,
         type: 'error',

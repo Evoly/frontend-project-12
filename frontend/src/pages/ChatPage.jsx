@@ -11,16 +11,18 @@ import { setOpen } from '../slices/modalSlice';
 import Chat from '../components/Chat';
 
 const ChatPage = () => {
-  const auth = useAuth(); // todo
+  const auth = useAuth();
   const dispatch = useDispatch();
 
   filter.add(filter.getDictionary('ru'));
 
-  const [currentChannelId, setCurrentChannelID] = useState('1'); // todo
+  const defaultChannelId = '1';
+  const [currentChannelId, setCurrentChannelID] = useState(defaultChannelId);
   const [message, setMessage] = useState('');
 
   const { messages } = useSelector((state) => state.messages);
   const { channels } = useSelector((state) => state.channels);
+  const { username } = auth.getUser();
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -36,10 +38,15 @@ const ChatPage = () => {
       dispatch(renameChannel(message));
     });
     socket.on('newChannel', (message) => {
+      console.log('newChannel', message) // TODO
       dispatch(addChannel(message));
+
     });
     socket.on('removeChannel', (message) => {
       dispatch(removeChannel(message));
+      if (currentChannelId === message.id) {
+        setCurrentChannelID(defaultChannelId);
+      }
     });
     return () => {
       socket.off('newMessage');
@@ -47,17 +54,14 @@ const ChatPage = () => {
       socket.off('newChannel');
       socket.off('removeChannel');
     };
-  }, [dispatch])
+  }, [dispatch, currentChannelId]);
 
-
-  const changeCurrentChannel = (id) => setCurrentChannelID(id);
+  const changeCurrentChannel = (id = defaultChannelId) => setCurrentChannelID(id);
   const handleMessage = (event) => setMessage(event.target.value);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { username } = auth.getUser();
     const filteredMessage = filter.clean(message);
-    //socket.emit('newMessage', { body: message, channelId: currentChannelId, username });
     dispatch(sendMessage({ body: filteredMessage, channelId: currentChannelId, username }));
     setMessage('');
   };

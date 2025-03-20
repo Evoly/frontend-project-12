@@ -130,7 +130,7 @@ const Chat = ({props}) => {
         </Col>
 
       </Row>
-      <MyModal title={'Remove channel'} />
+      <MyModal changeCurrentChannel={changeCurrentChannel} />
     </main>
   )
 };
