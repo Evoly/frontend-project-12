@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Row, Col, Form, Button, ListGroup, ListGroupItem, InputGroup, Dropdown, ButtonGroup } from 'react-bootstrap';
 import MyModal from './Modal';
 
-
 const Chat = ({props}) => {
-  const { channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal } = props;
+  const { channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal, show } = props;
+
+  const messageRef = useRef(null);
+  useEffect(() => {
+    if (!show) {
+      messageRef.current.focus()
+    }
+  }, [show]);
 
   if (!channels) return;
+
 
   const channelName = (id, name) => (
     <Button
@@ -108,12 +115,13 @@ const Chat = ({props}) => {
                     className="border-0 p-0 ps-2 form-control"
                     onChange={handleMessage}
                     value={message}
+                    ref={messageRef}
                   />
                   <Button
                     variant=""
                     type='submit'
                     className="btn-group-vertical"
-                    disabled=""                    
+                    disabled=""             
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
                       width="20" height="20" fill="currentColor">
@@ -128,7 +136,6 @@ const Chat = ({props}) => {
             </div>
           </div>
         </Col>
-
       </Row>
       <MyModal changeCurrentChannel={changeCurrentChannel} />
     </main>

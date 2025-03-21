@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -5,9 +6,17 @@ import filter from 'leo-profanity';
 
 import { Button, Form, Modal } from 'react-bootstrap';
 
-const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
+const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
 
   const { t } = useTranslation();
+
+  const modalRef = useRef(null);
+  useEffect(() => {
+    console.log('modalRef.current', modalRef.current)
+    if (show && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [show]);
 
   filter.add(filter.getDictionary('ru'));
 
@@ -24,7 +33,6 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
     initialValues: {
       name: "",
     },
-    validateOnMount: true,
     validationSchema: schema,
     validateOnChange: true,
     onSubmit: async (values) => {
@@ -57,8 +65,8 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
               aria-label=""
               className={inputClasses}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.name}
+              ref={modalRef}
             />
             {formik.touched.name && formik.errors.name ? (
               <div className="text-danger w-100">{formik.errors.name}</div>
@@ -66,7 +74,7 @@ const ModalSendData = ({ channels, handleSubmit, show , handleClose, type}) => {
             <Button variant="secondary" type='reset' onClick={() => {formik.resetForm(); handleClose()}}>
               {t('modal.cancelButton')}
             </Button>
-            <Button variant="primary" type='submit' disabled={!formik.isValid}>
+            <Button variant="primary" type='submit'>
               {t('modal.submit')}
             </Button>
           </Form>

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -27,8 +28,18 @@ const MyModal = ({ changeCurrentChannel }) => {
   
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const messages = {
+  /*
+  const modalRef = useRef(null);
+  useEffect(() => {
+    console.log('modalRef.current', modalRef.current)
+    if (show && modalRef.current) {
+      setTimeout(() => {
+        modalRef.current.focus();
+      }, 100);
+    }
+  }, [show]);
+*/
+    const messages = {
     removeChannel: {
       loading: t('channel.removeChannelPending'),
       success: t('channel.removeChannelFulfilled'),
@@ -77,7 +88,7 @@ const MyModal = ({ changeCurrentChannel }) => {
 
   const CurrentModal = types[type];
 
-  return (type && <CurrentModal id={id} show={show} handleSubmit={handleSubmit} handleClose= {handleClose} channels = {channels} type={type}/>);
+  return (type && <CurrentModal id={id} show={show} handleSubmit={handleSubmit} handleClose={handleClose} channels={channels} type={type}/>);
 }
 
 export default MyModal;

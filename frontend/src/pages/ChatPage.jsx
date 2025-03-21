@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import filter from 'leo-profanity';
 
@@ -22,7 +22,7 @@ const ChatPage = () => {
 
   const { messages } = useSelector((state) => state.messages);
   const { channels } = useSelector((state) => state.channels);
-  const { username } = auth.getUser();
+  const { show } = useSelector((state) => state.modal);
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -38,9 +38,7 @@ const ChatPage = () => {
       dispatch(renameChannel(message));
     });
     socket.on('newChannel', (message) => {
-      console.log('newChannel', message) // TODO
       dispatch(addChannel(message));
-
     });
     socket.on('removeChannel', (message) => {
       dispatch(removeChannel(message));
@@ -62,6 +60,7 @@ const ChatPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const filteredMessage = filter.clean(message);
+    const { username } = auth.getUser();
     dispatch(sendMessage({ body: filteredMessage, channelId: currentChannelId, username }));
     setMessage('');
   };
@@ -70,7 +69,7 @@ const ChatPage = () => {
 
   return (
     <>
-      <Chat props={{ channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal }} />
+      <Chat props={{ channels, messages, message, currentChannelId, changeCurrentChannel, handleSubmit, handleMessage, handleModal, show }} />
     </>    
   )
 };
