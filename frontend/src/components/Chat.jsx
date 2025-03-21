@@ -10,6 +10,7 @@ import {
   Dropdown,
   ButtonGroup,
 } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import MyModal from "./Modal";
 
 const Chat = ({ props }) => {
@@ -25,6 +26,7 @@ const Chat = ({ props }) => {
     show,
   } = props;
 
+  const { t } = useTranslation();
   const messageRef = useRef(null);
   useEffect(() => {
     if (!show) {
@@ -57,19 +59,19 @@ const Chat = ({ props }) => {
           key="down"
           className="text-end rounded-0"
         >
-          <span className="visually-hidden">Управление каналом</span>
+          <span className="visually-hidden">{t("chatPage.channelContol")}</span>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => handleModal({ id, type: "removeChannel" })}
           >
-            Удалить
+            {t("chatPage.delete")}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => handleModal({ id, type: "renameChannel" })}
           >
-            Переименовать
+            {t("chatPage.rename")}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
@@ -97,7 +99,7 @@ const Chat = ({ props }) => {
           <p className="m-0">
             <b># {channel.name}</b>
           </p>
-          <span className="text-muted">{currentMessages.length} сообщения</span>
+          <span className="text-muted">{t("chatPage.messages", { count: currentMessages.length })}</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
           {currentMessages.map((message) => (
@@ -119,7 +121,7 @@ const Chat = ({ props }) => {
           className="border-end px-0 bg-light flex-column h-100 d-flex"
         >
           <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-            <b>Каналы</b>
+            <b>{t("chatPage.channels")}</b>
             <Button
               onClick={() => handleModal({ type: "addChannel" })}
               variant=""
@@ -155,8 +157,8 @@ const Chat = ({ props }) => {
                 <InputGroup>
                   <Form.Control
                     name="body"
-                    aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
+                    aria-label={t("chatPage.newMessage")}
+                    placeholder={t("chatPage.placeholder")}
                     className="border-0 p-0 ps-2 form-control"
                     onChange={handleMessage}
                     value={message}
@@ -180,7 +182,7 @@ const Chat = ({ props }) => {
                         d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"
                       ></path>
                     </svg>
-                    <span className="visually-hidden">Отправить</span>
+                    <span className="visually-hidden">{t("chatPage.submit")}</span>
                   </Button>
                 </InputGroup>
               </Form>

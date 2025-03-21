@@ -1,7 +1,10 @@
-import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
-const NotFound = () => (
+const NotFound = () => {
+  const { t } = useTranslation();
+  return (
   <main className="container-fluid h-100">
     <Row className="justify-content-center align-content-center h-100">
       <Col sm={12} md={8} lg={5} className="text-center">
@@ -10,15 +13,14 @@ const NotFound = () => (
           src="./public/404.svg"
           alt="страница не найдена"
         />
-        <h1 className="text-muted">Страница не найдена</h1>
+          <h1 className="text-muted">{t("notFoundPage.notFound")}</h1>
         <p>
-          {" "}
-          Но вы можете перейти
-          <Link to="/"> на главную страницу</Link>
+          {t("notFoundPage.goTo")}
+          <Link to="/">{t("notFoundPage.link")}</Link>
         </p>
       </Col>
     </Row>
   </main>
-);
+)};
 
 export default NotFound;

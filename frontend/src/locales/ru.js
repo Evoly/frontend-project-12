@@ -52,7 +52,24 @@ const ru = {
       401: "Неверные имя пользователя или пароль",
       409: "Tакой пользователь уже существует",
       500: "Сервер не доступен, попробуйте позже ",
-      default: "Something went wrong",
+      default: "Что-то пошло не так...",
+    },
+    notFoundPage: {
+      notFound:'Страница не найдена',
+      goTo: 'Но вы можете перейти',
+      link: 'на главную страницу'
+    },
+    chatPage: {
+      delete: 'Удалить',
+      rename: 'Переименовать',
+      channelContol: 'Управление каналом',
+      messages_one: '{{count}} сообщение',
+      messages_few: '{{count}} сообщения',
+      messages_many: '{{count}} сообщений',
+      channels: 'Каналы',
+      placeholder: 'Введите сообщение...',
+      newMessage: 'Новое сообщение',
+      submit: "Отправить",
     },
   },
 };
