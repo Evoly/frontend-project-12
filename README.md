@@ -1,4 +1,3 @@
-### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Evoly/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Evoly/frontend-project-12/actions)
 
 # Chat App
@@ -12,10 +11,10 @@ It'is a real-time messaging application. The application is divided into channel
 - **Redux Toolkit** - State management for React applications.
 - **React Router DOM** - Routing for React applications.
 - **Axios** - HTTP client for making API requests.
+- **Socket.IO Client** - Real-time communication with the server.
 - **Formik** - Form handling library.
 - **Yup** - Schema validation for forms.
-- **Socket.IO Client** - Real-time communication with the server.
-- **Bootstrap** - CSS framework for styling.
+- **React-bootstrap** - CSS framework for styling.
 - **i18next** - Internationalization framework.
 - **React Toastify** - Toast notifications.
 - **Leo Profanity** - Profanity filter.
@@ -64,6 +63,6 @@ To set up the project locally, follow these steps:
     npm run server
     ```
 
-## Deployment Link
+## Deployment:
 
 You can try the application at the following link: [Chat App](https://frontend-project-12-fmkq.onrender.com/)
