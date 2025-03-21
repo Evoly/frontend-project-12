@@ -20,7 +20,8 @@ i18n
     }
   });
 
-  const Init = () => {
+
+const Init = () => {
     
     return (
       <Provider store={store}>

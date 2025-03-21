@@ -16,7 +16,8 @@
     },
     "dependencies": {
         "@hexlet/chat-server": "^2.0.4",
-        "concurrently": "^9.1.2"
-
+        "@rollbar/react": "^0.12.1",
+        "concurrently": "^9.1.2",
+        "rollbar": "^2.26.4"
     }
 }
