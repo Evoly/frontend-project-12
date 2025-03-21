@@ -19,5 +19,8 @@
         "@rollbar/react": "^0.12.1",
         "concurrently": "^9.1.2",
         "rollbar": "^2.26.4"
+    },
+    "devDependencies": {
+        "prettier": "^3.5.3"
     }
 }

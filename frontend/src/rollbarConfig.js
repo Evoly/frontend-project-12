@@ -6,10 +6,10 @@ const rollbarConfig = {
     environment: "production",
     client: {
       javascript: {
-        code_version: '1.0.0',
-      }
+        code_version: "1.0.0",
+      },
     },
-  }
+  },
 };
 
 export default rollbarConfig;
