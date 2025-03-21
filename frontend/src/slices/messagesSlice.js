@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import { removeChannel } from './channelsSlice';
+
 import { dataRoutes } from "../api/routes";
 import api from "../api/requests";
 
@@ -54,7 +56,10 @@ const messagesSlice = createSlice({
       )
       .addCase(sendMessage.rejected, (state, action) =>
         handleFailed(state, action),
-      );
+      )
+      .addCase(removeChannel, (state, action) => {
+        state.messages = state.messages.filter(({ channelId }) => channelId !== action.payload.id);
+      });
   },
 });
 
