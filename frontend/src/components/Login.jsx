@@ -71,15 +71,12 @@ const Login = ({ props }) => {
                     }
                   />
                   <Form.Label>{t("forms.password")}</Form.Label>
-                  {formik.errors.password && (
+                  {(formik.errors.password || err === 401) && (
                     <Form.Control.Feedback type="invalid" tooltip>
-                      {formik.errors.password}
+                      {formik.errors.password || t("errors.401")}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
-                {err === 401 && (
-                  <div className="text-danger mb-2">{t("errors.401")}</div>
-                )}
                 <Button className="w-100 mb-3 btn btn-primary" type="submit">
                   {t("forms.authButton")}
                 </Button>

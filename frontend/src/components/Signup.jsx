@@ -94,15 +94,12 @@ const Signup = ({ props }) => {
                   <Form.Label className="form-label">
                     {t("forms.confirmPassword")}
                   </Form.Label>
-                  {formik.errors.confirmPassword && (
-                    <Form.Control.Feedback type="invalid" tooltip>
-                      {formik.errors.confirmPassword}
+                  {(formik.errors.confirmPassword || err === 409) && (
+                    <Form.Control.Feedback type="invalid" tooltip style={{ display: "block" }}>
+                      {formik.errors.confirmPassword || t("errors.409")}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
-                {err === 409 && (
-                  <div className="text-danger mb-2">{t("errors.409")}</div>
-                )}
                 <Button className="w-100 mb-3 btn btn-primary" type="submit">
                   {t("forms.registrationButton")}
                 </Button>
