@@ -58,7 +58,8 @@ const MyModal = ({ changeCurrentChannel }) => {
         render: messages[type].success,
         type: "success",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
+        closeButton: null,
       });
       if (type === "addChannel") {
         changeCurrentChannel(id);
@@ -69,7 +70,8 @@ const MyModal = ({ changeCurrentChannel }) => {
         render: messages[type].error,
         type: "error",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
+        closeButton: null,
       });
     }
     dispatch(setClose());
