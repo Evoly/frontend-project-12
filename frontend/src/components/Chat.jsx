@@ -11,7 +11,10 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Picker from 'emoji-picker-react';
 import MyModal from "./Modal";
+import Smile from "./svg/Smile";
+import '../css/chatpage.css'
 
 const Chat = ({ props }) => {
   const {
@@ -24,17 +27,18 @@ const Chat = ({ props }) => {
     handleMessage,
     handleModal,
     show,
+    onEmojiClick,
+    showPicker,
+    handlePicker
   } = props;
 
   const { t } = useTranslation();
   const messageRef = useRef(null);
   useEffect(() => {
-    if (!show) {
+    if (!show || !showPicker) {
       messageRef.current.focus();
     }
-  }, [show]);
-
-  if (!channels) return;
+  }, [show, showPicker]);
 
   const channelName = (id, name) => (
     <Button
@@ -151,15 +155,19 @@ const Chat = ({ props }) => {
             <div className="mt-auto px-5 py-3">
               <Form
                 noValidate
-                className="py-1 border rounded-2"
+                className="p-1 border rounded-2"
                 onSubmit={handleSubmit}
               >
                 <InputGroup>
+                  {showPicker && (
+                    <Picker pickerStyle={{ width: "100%" }} onEmojiClick={onEmojiClick} emojiContainerClassName="custom-emoji-box" />
+                  )}
+                  <Smile handlePicker={handlePicker} classNames={'message-svg position-absolute top-50 translate-middle'}/>
                   <Form.Control
                     name="body"
                     aria-label={t("chatPage.newMessage")}
                     placeholder={t("chatPage.placeholder")}
-                    className="border-0 p-0 ps-2 form-control"
+                    className="border-0 p-0 ps-5"
                     onChange={handleMessage}
                     value={message}
                     ref={messageRef}

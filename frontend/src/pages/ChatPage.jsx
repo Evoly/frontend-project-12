@@ -28,6 +28,7 @@ const ChatPage = () => {
   const defaultChannelId = "1";
   const [currentChannelId, setCurrentChannelID] = useState(defaultChannelId);
   const [message, setMessage] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
 
   const { messages } = useSelector((state) => state.messages);
   const { channels } = useSelector((state) => state.channels);
@@ -67,6 +68,11 @@ const ChatPage = () => {
     setCurrentChannelID(id);
   const handleMessage = (event) => setMessage(event.target.value);
 
+  const onEmojiClick = (event) => {
+    setMessage(`${message}${event.emoji}`);
+    setShowPicker(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const filteredMessage = filter.clean(message);
@@ -82,6 +88,7 @@ const ChatPage = () => {
   };
 
   const handleModal = (id, type) => dispatch(setOpen(id, type));
+  const handlePicker = () => setShowPicker(!showPicker);
 
   return (
     <>
@@ -96,6 +103,9 @@ const ChatPage = () => {
           handleMessage,
           handleModal,
           show,
+          showPicker,
+          onEmojiClick,
+          handlePicker
         }}
       />
     </>
