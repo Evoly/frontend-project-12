@@ -80,6 +80,7 @@ const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
               value={formik.values.name}
               ref={modalRef}
             />
+            <Form.Label className="visually-hidden" for="name">{t("channel.channelName")}</Form.Label>
             {formik.touched.name && formik.errors.name ? (
               <div className="text-danger w-100">{formik.errors.name}</div>
             ) : null}

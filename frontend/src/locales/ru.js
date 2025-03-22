@@ -20,6 +20,7 @@ const ru = {
       renameChannelPending: "Переименование канала...",
       renameChannelFulfilled: "Канал переименован",
       renameChannelRejected: "Ошибка при переименовании канала",
+      channelName: 'Имя канала',
     },
     validation: {
       required: "Обязательное поле",
