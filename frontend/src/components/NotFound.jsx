@@ -10,7 +10,7 @@ const NotFound = () => {
       <Col sm={12} md={8} lg={5} className="text-center">
         <img
           className="img-fluid h-25"
-          src="./public/404.svg"
+          src="/404.svg"
           alt="страница не найдена"
         />
           <h1 className="text-muted">{t("notFoundPage.notFound")}</h1>

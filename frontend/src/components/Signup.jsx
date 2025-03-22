@@ -16,7 +16,7 @@ const Signup = ({ props }) => {
             <div className="d-flex col-12 col-md-6 justify-content-center align-content-center p-5">
               <img
                 className="rounded-circle"
-                src="./public/img-1.jpg"
+                src="/img-1.jpg"
                 alt="Войти"
               />
             </div>
