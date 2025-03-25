@@ -39,7 +39,7 @@ const Signup = ({ props }) => {
                       (formik.errors.username && formik.touched.username)
                     }
                   />
-                  <Form.Label className="form-label">
+                  <Form.Label>
                     {t("forms.registrationName")}
                   </Form.Label>
                   {formik.errors.username && (
@@ -63,7 +63,7 @@ const Signup = ({ props }) => {
                       formik.errors.password && formik.touched.password
                     }
                   />
-                  <Form.Label className="form-label">
+                  <Form.Label>
                     {t("forms.password")}
                   </Form.Label>
                   {formik.errors.password && (
@@ -91,7 +91,7 @@ const Signup = ({ props }) => {
                       formik.touched.confirmPassword
                     }
                   />
-                  <Form.Label className="form-label">
+                  <Form.Label>
                     {t("forms.confirmPassword")}
                   </Form.Label>
                   {(formik.errors.confirmPassword || err === 409) && (

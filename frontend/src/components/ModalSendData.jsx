@@ -11,9 +11,8 @@ const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
 
   const modalRef = useRef(null);
   useEffect(() => {
-    console.log("modalRef.current", modalRef.current);
     if (show && modalRef.current) {
-      modalRef.current.focus();
+      modalRef.current.select();
     }
   }, [show]);
 
@@ -71,19 +70,21 @@ const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
             className="py-1 d-flex flex-wrap justify-content-between"
             onSubmit={formik.handleSubmit}
           >
-            <Form.Control
-              type="text"
-              name="name"
-              aria-label=""
-              className={inputClasses}
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              ref={modalRef}
-            />
-            <Form.Label className="visually-hidden" for="name">{t("channel.channelName")}</Form.Label>
-            {formik.touched.name && formik.errors.name ? (
-              <div className="text-danger w-100">{formik.errors.name}</div>
-            ) : null}
+            <Form.Group className="mb-3 w-100" controlId="channel">
+              <Form.Control
+                type="text"
+                name="name"
+                aria-label=""
+                className={inputClasses}
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                ref={modalRef}
+              />
+              <Form.Label className="visually-hidden">{t("channel.channelName")}</Form.Label>
+              {formik.touched.name && formik.errors.name ? (
+                <div className="text-danger w-100">{formik.errors.name}</div>
+              ) : null}
+          </Form.Group>
             <Button
               variant="secondary"
               type="reset"

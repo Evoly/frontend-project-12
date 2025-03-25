@@ -39,6 +39,11 @@ const ChatPage = () => {
     dispatch(fetchMessages());
   }, [dispatch]);
 
+  /*
+  const scrollToBottom = () => {
+    
+  }
+*/
   useEffect(() => {
     socket.on("newMessage", (message) => {
       dispatch(addMessage(message));
