@@ -36,7 +36,7 @@ const ModalConfirm = ({ handleSubmit, show, handleClose }) => {
             <Button variant="secondary" type="reset" onClick={handleClose}>
               {t("modal.cancelButton")}
             </Button>
-            <Button variant="primary" type="submit" ref={modalRef}>
+            <Button variant="danger" type="submit" ref={modalRef}>
               {t("modal.removeButton")}
             </Button>
           </Form>
