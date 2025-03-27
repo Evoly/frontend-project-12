@@ -15,7 +15,7 @@ const ru = {
       addChannelFulfilled: "Канал создан",
       addChannelRejected: "Ошибка при создании канала",
       removeChannelPending: "Удаление канала...",
-      removeChannelFulfilled: "Канал удален",
+      removeChannelFulfilled: "Канал удалён",
       removeChannelRejected: "Ошибка при удалении канала",
       renameChannelPending: "Переименование канала...",
       renameChannelFulfilled: "Канал переименован",
