@@ -29,11 +29,6 @@ const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
         t("validation.channelsValidation.duplicate"),
         (val) => !channels.some(({ name }) => name === val),
       )
-      .test(
-        "profanity",
-        t("validation.channelsValidation.profanity"),
-        (val) => filter.badWordsUsed(val).length < 1,
-      ),
   });
   const formik = useFormik({
     initialValues: {
@@ -42,9 +37,9 @@ const ModalSendData = ({ channels, handleSubmit, show, handleClose, type }) => {
     validationSchema: schema,
     validateOnChange: true,
     onSubmit: async (values) => {
-      console.log(filter.badWordsUsed(values.name));
+      const name = filter.clean(values.name);
       try {
-        await handleSubmit(values);
+        await handleSubmit({ name });
       } catch (err) {
         console.log("err", err.message);
       }
