@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import filter from "leo-profanity";
 
@@ -32,7 +32,7 @@ const ChatPage = () => {
 
   const { messages } = useSelector((state) => state.messages);
   const { channels } = useSelector((state) => state.channels);
-  const { show } = useSelector((state) => state.modal);
+  //  const { show } = useSelector((state) => state.modal);
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -112,7 +112,6 @@ const ChatPage = () => {
           handleSubmit,
           handleMessage,
           handleModal,
-          show,
           showPicker,
           onEmojiClick,
           handlePicker,
