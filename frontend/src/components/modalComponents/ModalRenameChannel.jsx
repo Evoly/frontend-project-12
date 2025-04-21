@@ -19,6 +19,8 @@ const ModalRenameChannel = ({ channels, show, handleClose, id }) => {
     error: t('channel.renameChannelRejected'),
   };
 
+  const currentChannel = channels.find((channel) => channel.id === id).name;
+
   const modalRef = useRef(null);
   useEffect(() => {
     if (show && modalRef.current) {
@@ -40,7 +42,7 @@ const ModalRenameChannel = ({ channels, show, handleClose, id }) => {
   });
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: currentChannel,
     },
     validationSchema: schema,
     validateOnChange: true,
