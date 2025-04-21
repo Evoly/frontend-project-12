@@ -1,12 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { dataRoutes } from "../api/routes";
-import api from "../api/requests";
+import { dataRoutes } from '../api/routes';
+import api from '../api/requests';
 
 const defaultChannelId = '1';
 const initialState = {
   channels: [],
-  loadingStatus: "idle",
+  loadingStatus: 'idle',
   error: null,
   activeChannelId: defaultChannelId,
 };
@@ -16,52 +16,52 @@ const setActiveChannel = (state, id) => {
 };
 
 const handleLoading = (state) => {
-  state.loadingStatus = "loading";
+  state.loadingStatus = 'loading';
   state.error = null;
 };
 const handleFailed = (state, action) => {
-  state.loadingStatus = "failed";
+  state.loadingStatus = 'failed';
   state.error = action.error;
 };
 
 export const fetchChannels = createAsyncThunk(
-  "channels/fetchChannels",
+  'channels/fetchChannels',
   async () => {
-    const response = await api("get", dataRoutes.channels());
+    const response = await api('get', dataRoutes.channels());
     return response.data;
   },
 );
 
 export const addChannelRequest = createAsyncThunk(
-  "channels/addChannel",
+  'channels/addChannel',
   async ({ name }) => {
-    const response = await api("post", dataRoutes.channels(), { name });
+    const response = await api('post', dataRoutes.channels(), { name });
     return response.data;
   },
 );
 
 export const removeChannelRequest = createAsyncThunk(
-  "channels/removeChannel",
+  'channels/removeChannel',
   async ({ id }) => {
-    const response = await api("delete", dataRoutes.channel(id));
+    const response = await api('delete', dataRoutes.channel(id));
     return response.data;
   },
 );
 
 export const renameChannelRequest = createAsyncThunk(
-  "channels/renameChannel",
+  'channels/renameChannel',
   async ({ id, name }) => {
-    const response = await api("patch", dataRoutes.channel(id), { name });
+    const response = await api('patch', dataRoutes.channel(id), { name });
     return response.data;
   },
 );
 
 const channelsSlice = createSlice({
-  name: "channels",
+  name: 'channels',
   initialState,
   reducers: {
     renameChannel: (state, action) => {
-      const channel = state.channels.find(({ id }) => id == action.payload.id);
+      const channel = state.channels.find(({ id }) => id === action.payload.id);
       channel.name = action.payload.name;
     },
     addChannel: (state, action) => {
@@ -77,35 +77,27 @@ const channelsSlice = createSlice({
       }
     },
     changeActiveChannel: (state, action) => {
-      console.log('change', action)
       setActiveChannel(state, action.payload);
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.pending, (state) => handleLoading(state))
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        state.loadingStatus = "idle";
+        state.loadingStatus = 'idle';
         state.channels = action.payload;
       })
-      .addCase(fetchChannels.rejected, (state, action) =>
-        handleFailed(state, action),
-      )
+      .addCase(fetchChannels.rejected, (state, action) => handleFailed(state, action))
       .addCase(addChannelRequest.pending, (state) => handleLoading(state))
-      .addCase(addChannelRequest.rejected, (state, action) =>
-        handleFailed(state, action),
-      )
+      .addCase(addChannelRequest.rejected, (state, action) => handleFailed(state, action))
       .addCase(removeChannelRequest.pending, (state) => handleLoading(state))
-      .addCase(removeChannelRequest.rejected, (state, action) =>
-        handleFailed(state, action),
-      )
+      .addCase(removeChannelRequest.rejected, (state, action) => handleFailed(state, action))
       .addCase(renameChannelRequest.pending, (state) => handleLoading(state))
-      .addCase(renameChannelRequest.rejected, (state, action) =>
-        handleFailed(state, action),
-      );
+      .addCase(renameChannelRequest.rejected, (state, action) => handleFailed(state, action));
   },
 });
 
-export const { renameChannel, removeChannel, addChannel, changeActiveChannel } =
-  channelsSlice.actions;
+export const {
+  renameChannel, removeChannel, addChannel, changeActiveChannel,
+} = channelsSlice.actions;
 export default channelsSlice.reducer;

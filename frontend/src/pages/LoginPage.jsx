@@ -45,7 +45,6 @@ const LoginPage = () => {
         const authError = err.status ?? err.code;
         auth.updateAuthError(authError);
         const test = t(`errors.900`) ?? "";
-        console.log("test:", test);
 
         if (authError === 401) return;
         toast.error(t([`errors.${authError}`, `errors.default`])); // TODO move to api ?

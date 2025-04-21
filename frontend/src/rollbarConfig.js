@@ -1,12 +1,12 @@
 const rollbarConfig = {
-  accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
+  accessToken: 'POST_CLIENT_ITEM_ACCESS_TOKEN',
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
-    environment: "production",
+    environment: 'production',
     client: {
       javascript: {
-        code_version: "1.0.0",
+        code_version: '1.0.0',
       },
     },
   },

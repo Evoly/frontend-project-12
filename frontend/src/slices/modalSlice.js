@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   show: false,
@@ -7,11 +7,10 @@ const initialState = {
 };
 
 const modalSlice = createSlice({
-  name: "modal",
+  name: 'modal',
   initialState,
   reducers: {
     setOpen: (state, action) => {
-      console.log("action:", action);
       state.show = true;
       state.id = action.payload.id;
       state.type = action.payload.type;

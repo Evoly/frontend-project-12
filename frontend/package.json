@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
+    "@vitejs/plugin-react": "^4.4.1",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "emoji-picker-react": "^4.12.2",
@@ -27,19 +28,18 @@
     "react-toastify": "^11.0.5",
     "redux": "^5.0.1",
     "socket.io-client": "^4.8.1",
+    "vite": "^6.0.5",
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-functional": "^5.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "globals": "^15.14.0",
-    "prettier": "^3.5.3",
-    "vite": "^6.0.5"
+    "prettier": "^3.5.3"
   }
 }
