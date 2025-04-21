@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import socket from "../api/socket";
+import socketApi from "../api/socket";
 
 import { Row, Col } from "react-bootstrap";
 import MyModal from "./Modal";
@@ -9,17 +9,9 @@ import Messages from "./chatComponents/Messages";
 import MessageForm from './chatComponents/MessageForm'
 import '../css/chatpage.css';
 
-import {
-  addMessage,
-  fetchMessages,
-} from "../slices/messagesSlice";
+import { fetchMessages } from "../slices/messagesSlice";
 
-import {
-  addChannel,
-  fetchChannels,
-  removeChannel,
-  renameChannel,
-} from "../slices/channelsSlice";
+import { fetchChannels } from "../slices/channelsSlice";
 
 import { setOpen } from "../slices/modalSlice";
 
@@ -41,26 +33,9 @@ const Chat = ({  }) => {
   }
 */
   useEffect(() => {
-    socket.on("newMessage", (message) => {
-      dispatch(addMessage(message));
-    });
-    socket.on("renameChannel", (message) => {
-      dispatch(renameChannel(message));
-    });
-    socket.on("newChannel", (message) => {
-      dispatch(addChannel(message));
-    });
-    socket.on("removeChannel", (message) => {
-      dispatch(removeChannel(message));
-    });
-
-    return () => {
-      socket.off("newMessage");
-      socket.off("renameChannel");
-      socket.off("newChannel");
-      socket.off("removeChannel");
-    };
-  }, [dispatch, activeChannelId]);
+    const socketListeners = socketApi(dispatch);
+    return socketListeners;
+  }, [dispatch]);
 
   const handleModal = (id, type) => dispatch(setOpen(id, type));
 
