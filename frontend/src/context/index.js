@@ -1,5 +1,4 @@
-import { createContext } from "react";
+import AuthContext from "./authContext";
+import UiContext from "./uiContext";
 
-const AuthContext = createContext({});
-
-export default AuthContext;
+export { AuthContext, UiContext};

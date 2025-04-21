@@ -1,22 +1,50 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import filter from "leo-profanity";
 import EmojiPicker from 'emoji-picker-react';
+
+import { useAuth, useUiContext } from "../../hooks";
+import { sendMessage } from "../../slices/messagesSlice";
+
 import Smile from '../svg/Smile';
 import Arrow from '../svg/Arrow';
 
-const MessageForm = ({
-  message,
-  handleSubmit,
-  handleMessage,
-  onEmojiClick,
-  showPicker,
-  handlePicker,
-  closeEmojiBox,
-}) => {
+const MessageForm = ({ currentChannelId }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const auth = useAuth();
+  const inputRef = useUiContext();
   const messageRef = useRef(null);
 
+  const { show } = useSelector((state) => state.modal);
+
+  useEffect(() => {
+    inputRef.saveInputRef(messageRef.current)
+  }, [messageRef])
+
+  useEffect(() => {
+    if (!show) {
+      inputRef.setFocus();
+    }    
+  }, [show])
+
+  const [message, setMessage] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onEmojiClick = (event) => {
+    setMessage(`${message}${event.emoji}`);
+    setShowPicker(false);
+  };
+
+  const handlePicker = () => setShowPicker(!showPicker);
+
+  const closeEmojiBox = (event) => {
+    if (event.key === 'Escape') {
+      handlePicker();
+    }
+  };
   useEffect(() => {
     if (!showPicker) {
       messageRef.current.focus();
@@ -29,6 +57,22 @@ const MessageForm = ({
 
     return () => document.removeEventListener('keydown', closeEmojiBox);
   }, [showPicker]);
+
+  const handleMessage = (event) => setMessage(event.target.value);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const filteredMessage = filter.clean(message);
+    const { username } = auth.getUser();
+    dispatch(
+      sendMessage({
+        body: filteredMessage,
+        channelId: currentChannelId,
+        username,
+      }),
+    );
+    setMessage("");
+  };
 
   return (
     <div className='mt-auto px-5 py-3'>

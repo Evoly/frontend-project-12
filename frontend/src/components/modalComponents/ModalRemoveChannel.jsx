@@ -29,7 +29,7 @@ const ModalRemoveChannel = ({ show, handleClose, id, changeCurrentChannel }) => 
     e.preventDefault();
     const response = dispatch(removeChannel({ id }))
       .unwrap()
-      .then(() => changeCurrentChannel('1'));
+      .then(() => changeCurrentChannel());
     toastPromise(response, message);
     handleClose();
   }

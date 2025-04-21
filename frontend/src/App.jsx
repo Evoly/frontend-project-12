@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useState } from "react";
 
-import useAuth from "./hooks/index.js";
-import AuthContext from "./context/index.js";
+import { useAuth } from "./hooks/index.js";
+import { AuthContext } from "./context/index.js";
 
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
@@ -18,7 +18,6 @@ const AuthProvider = ({ children }) => {
   const logIn = () => setLoggedIn(true);
 
   const addUser = (currentUser) => setUser(currentUser);
-  console.log("user", user);
   const getUser = () => user;
 
   const logOut = () => {

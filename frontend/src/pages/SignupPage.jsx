@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-import useAuth from "../hooks";
+import { useAuth } from "../hooks";
 import { userRoutes } from "../api/routes";
 import api from "../api/requests";
 

@@ -1,6 +1,6 @@
 import { Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks";
+import { useAuth } from "../hooks";
 
 const RenderLogOut = () => {
   const auth = useAuth();
