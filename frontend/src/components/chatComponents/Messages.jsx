@@ -1,7 +1,6 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Messages = ({ messages, currentChannelId, channels }) => {
+const Messages = ({ messages, activeChannelId, channels }) => {
   const { t } = useTranslation();
 
   const renderMessages = (id) => {
@@ -30,7 +29,7 @@ const Messages = ({ messages, currentChannelId, channels }) => {
     );
   };
 
-  return renderMessages(currentChannelId);
+  return renderMessages(activeChannelId);
 };
 
 export default Messages;

@@ -3,10 +3,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { dataRoutes } from "../api/routes";
 import api from "../api/requests";
 
+const defaultChannelId = '1';
 const initialState = {
   channels: [],
   loadingStatus: "idle",
   error: null,
+  activeChannelId: defaultChannelId,
+};
+
+const setActiveChannel = (state, id) => {
+  state.activeChannelId = id;
 };
 
 const handleLoading = (state) => {
@@ -37,9 +43,7 @@ export const addChannelRequest = createAsyncThunk(
 export const removeChannelRequest = createAsyncThunk(
   "channels/removeChannel",
   async ({ id }) => {
-    console.log("id remove", id);
     const response = await api("delete", dataRoutes.channel(id));
-    console.log("removeChannel", response.data);
     return response.data;
   },
 );
@@ -62,12 +66,20 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
+      setActiveChannel(state, action.payload.id);
     },
     removeChannel: (state, action) => {
       state.channels = state.channels.filter(
         ({ id }) => id !== action.payload.id,
       );
+      if (state.activeChannelId === action.payload.id) {
+        setActiveChannel(state, defaultChannelId);
+      }
     },
+    changeActiveChannel: (state, action) => {
+      console.log('change', action)
+      setActiveChannel(state, action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -94,6 +106,6 @@ const channelsSlice = createSlice({
   },
 });
 
-export const { renameChannel, removeChannel, addChannel } =
+export const { renameChannel, removeChannel, addChannel, changeActiveChannel } =
   channelsSlice.actions;
 export default channelsSlice.reducer;

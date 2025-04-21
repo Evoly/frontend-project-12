@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { removeChannelRequest as removeChannel } from '../../slices/channelsSlice';
 import { toastPromise } from '../../utils/toastPromise';
 
-const ModalRemoveChannel = ({ show, handleClose, id, changeCurrentChannel }) => {
+const ModalRemoveChannel = ({ show, handleClose, id }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const message = {
@@ -19,7 +19,6 @@ const ModalRemoveChannel = ({ show, handleClose, id, changeCurrentChannel }) => 
 
   const modalRef = useRef(null);
   useEffect(() => {
-    console.log('modalRef.current', modalRef.current);
     if (show && modalRef.current) {
       modalRef.current.focus();
     }
@@ -27,9 +26,7 @@ const ModalRemoveChannel = ({ show, handleClose, id, changeCurrentChannel }) => 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const response = dispatch(removeChannel({ id }))
-      .unwrap()
-      .then(() => changeCurrentChannel());
+    const response = dispatch(removeChannel({ id })).unwrap();      
     toastPromise(response, message);
     handleClose();
   }

@@ -11,7 +11,7 @@ const types = {
   renameChannel: ModalRenameChannel,
 };
 
-const MyModal = ({ changeCurrentChannel }) => {
+const MyModal = () => {
   const { type, show, id } = useSelector((state) => state.modal);
   const { channels } = useSelector((state) => state.channels);
 
@@ -27,7 +27,6 @@ const MyModal = ({ changeCurrentChannel }) => {
         show={show}
         handleClose={handleClose}
         channels={channels}
-        changeCurrentChannel={changeCurrentChannel}
       />
     )
   );

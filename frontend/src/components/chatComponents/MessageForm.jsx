@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { sendMessage } from "../../slices/messagesSlice";
 import Smile from '../svg/Smile';
 import Arrow from '../svg/Arrow';
 
-const MessageForm = ({ currentChannelId }) => {
+const MessageForm = ({ activeChannelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const auth = useAuth();
@@ -22,13 +22,13 @@ const MessageForm = ({ currentChannelId }) => {
 
   useEffect(() => {
     inputRef.saveInputRef(messageRef.current)
-  }, [messageRef])
+  }, [inputRef])
 
   useEffect(() => {
     if (!show) {
       inputRef.setFocus();
     }    
-  }, [show])
+  }, [show, inputRef])
 
   const [message, setMessage] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -67,7 +67,7 @@ const MessageForm = ({ currentChannelId }) => {
     dispatch(
       sendMessage({
         body: filteredMessage,
-        channelId: currentChannelId,
+        channelId: activeChannelId,
         username,
       }),
     );

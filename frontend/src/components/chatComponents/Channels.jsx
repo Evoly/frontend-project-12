@@ -1,17 +1,25 @@
-import React from 'react';
+import { useDispatch } from 'react-redux';
 import { ListGroup, ListGroupItem, Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+
+import { changeActiveChannel } from '../../slices/channelsSlice';
+import { useUiContext } from "../../hooks";
 import Cross from '../svg/Cross';
 
-const Channels = ({ channels, changeCurrentChannel, handleModal }) => {
+const Channels = ({ channels, handleModal }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const inputRef = useUiContext();
 
   const channelName = (id, name) => (
     <Button
       variant='secondary'
       type='button'
       className='w-100 rounded-0 text-start btn btn-secondary text-truncate'
-      onClick={() => changeCurrentChannel(id)}
+      onClick={() => {
+        dispatch(changeActiveChannel(id));
+        inputRef.setFocus();
+      }}
     >
       {' '}
       # {name}

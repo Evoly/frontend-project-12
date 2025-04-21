@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "../api/socket";
 
@@ -26,11 +26,9 @@ import { setOpen } from "../slices/modalSlice";
 const Chat = ({  }) => {
   const dispatch = useDispatch();
 
-  const defaultChannelId = "1";
-  const [currentChannelId, setCurrentChannelID] = useState(defaultChannelId);
-
   const { messages } = useSelector((state) => state.messages);
   const { channels } = useSelector((state) => state.channels);
+  const { activeChannelId } = useSelector((state) => state.channels);
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -54,20 +52,15 @@ const Chat = ({  }) => {
     });
     socket.on("removeChannel", (message) => {
       dispatch(removeChannel(message));
-      if (currentChannelId === message.id) {
-        setCurrentChannelID(defaultChannelId);
-      }
     });
+
     return () => {
       socket.off("newMessage");
       socket.off("renameChannel");
       socket.off("newChannel");
       socket.off("removeChannel");
     };
-  }, [dispatch, currentChannelId]);
-
-  const changeCurrentChannel = (id = defaultChannelId) =>
-    setCurrentChannelID(id);
+  }, [dispatch, activeChannelId]);
 
   const handleModal = (id, type) => dispatch(setOpen(id, type));
 
@@ -81,7 +74,6 @@ const Chat = ({  }) => {
         >
           <Channels
             channels={channels}
-            changeCurrentChannel={changeCurrentChannel}
             handleModal={handleModal}
           />
         </Col>
@@ -90,15 +82,15 @@ const Chat = ({  }) => {
             <Messages
               messages={messages}
               channels={channels}
-              currentChannelId={currentChannelId}
+              activeChannelId={activeChannelId}
             />
             <div className="mt-auto px-5 py-3">
-              <MessageForm currentChannelId={currentChannelId} />
+              <MessageForm activeChannelId={activeChannelId} />
             </div>
           </div>
         </Col>
       </Row>
-      <MyModal changeCurrentChannel={changeCurrentChannel} />
+      <MyModal />
     </main>
   );
 };

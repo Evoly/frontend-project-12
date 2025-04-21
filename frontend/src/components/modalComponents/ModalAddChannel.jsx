@@ -10,7 +10,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { addChannelRequest as addChannel } from '../../slices/channelsSlice';
 import { toastPromise } from '../../utils/toastPromise';
 
-const ModalAddChannel = ({ channels, show, handleClose, changeCurrentChannel }) => {
+const ModalAddChannel = ({ channels, show, handleClose }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const message = {
@@ -47,9 +47,7 @@ const ModalAddChannel = ({ channels, show, handleClose, changeCurrentChannel }) 
     validateOnChange: true,
     onSubmit: async (values) => {
       const name = filter.clean(values.name);
-      const response = dispatch(addChannel({ name }))
-        .unwrap()
-        .then(({ id }) => changeCurrentChannel(id));
+      const response = dispatch(addChannel({ name })).unwrap();        
       toastPromise(response, message);
 
       handleClose();
