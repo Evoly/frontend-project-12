@@ -16,7 +16,7 @@ const NotFound = () => {
           <h1 className="text-muted">{t("notFoundPage.notFound")}</h1>
         <p>
           {t("notFoundPage.goTo")}
-          <Link to="/">{t("notFoundPage.link")}</Link>
+          <Link to={pagesRoutes.chat()}>{t("notFoundPage.link")}</Link>
         </p>
       </Col>
     </Row>

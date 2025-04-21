@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { useAuth } from "./hooks/index.js";
 import { AuthContext } from "./context/index.js";
+import { pagesRoutes } from "./api/routes";
 
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
@@ -47,7 +48,7 @@ const AuthProvider = ({ children }) => {
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
 
-  return auth.loggedIn ? children : <Navigate to="/login" />;
+  return auth.loggedIn ? children : <Navigate to={pagesRoutes.login()} />;
 };
 
 const App = () => {
@@ -66,8 +67,8 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignupPage />} />
+            <Route path={pagesRoutes.login()} element={<LoginPage />} />
+            <Route path={pagesRoutes.signup()} element={<SignupPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
@@ -80,6 +81,6 @@ export default App;
 
 /*
 todo:
-element={<Navigate to="/" replace />}
+element={<Navigate to={pagesRoutes.chat()} replace />}
 To keep the history clean, you should set replace prop. This will avoid extra redirects after the user click back.
 */

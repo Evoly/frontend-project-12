@@ -10,3 +10,9 @@ export const dataRoutes = {
   channel: (id) => [apiPath, "channels", id].join("/"),
   messages: () => [apiPath, "messages"].join("/"),
 };
+
+export const pagesRoutes = {
+  chat: () => '/',
+  login: () => '/login',
+  signup: () => '/signup',
+};

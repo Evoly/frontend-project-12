@@ -1,6 +1,8 @@
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { pagesRoutes } from "../api/routes";
+
 const NotFound = () => (
   <main className="container-fluid h-100">
     <Row className="justify-content-center align-content-center h-100">
@@ -14,7 +16,7 @@ const NotFound = () => (
         <p>
           {" "}
           Но вы можете перейти
-          <Link to="/"> на главную страницу</Link>
+          <Link to={pagesRoutes.chat()}> на главную страницу</Link>
         </p>
       </Col>
     </Row>

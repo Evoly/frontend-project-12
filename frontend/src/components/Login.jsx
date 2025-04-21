@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
+import { pagesRoutes } from "../api/routes";
+
 const Login = ({ props }) => {
   const { formik, err } = props;
   const { t } = useTranslation();
@@ -84,7 +86,7 @@ const Login = ({ props }) => {
             </div>
             <div className="col-12 shadow-sm text-center p-3 bg-light">
               <span>{t("forms.notAccount")} </span>
-              <Link to="/signup">{t("forms.signup")} </Link>
+              <Link to={pagesRoutes.signup()}>{t("forms.signup")} </Link>
             </div>
           </div>
         </Col>

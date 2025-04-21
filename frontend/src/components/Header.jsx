@@ -1,6 +1,7 @@
 import { Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks";
+import { pagesRoutes } from "../api/routes";
 
 const RenderLogOut = () => {
   const auth = useAuth();
@@ -18,7 +19,7 @@ const Header = () => {
   return (
     <header className="shadow-sm bg-white ">
       <Navbar className=" navbar-expand-lg container justify-content-between">
-        <Link to="/" className="navbar-brand">
+        <Link to={pagesRoutes.chat()} className="navbar-brand">
           Hexlet Chat
         </Link>
         {auth.loggedIn && <RenderLogOut />}
