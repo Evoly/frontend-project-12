@@ -62,6 +62,7 @@ const MessageForm = ({ activeChannelId }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!message.trim()) return;
     const filteredMessage = filter.clean(message);
     const { username } = auth.getUser();
     dispatch(
