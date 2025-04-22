@@ -1,7 +1,7 @@
-import { Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-import { pagesRoutes } from "../api/routes";
+import { pagesRoutes } from '../api/routes';
 
 const NotFound = () => (
   <main className="container-fluid h-100">
@@ -14,7 +14,7 @@ const NotFound = () => (
         />
         <h1 className="text-muted">Страница не найдена</h1>
         <p>
-          {" "}
+          {' '}
           Но вы можете перейти
           <Link to={pagesRoutes.chat()}> на главную страницу</Link>
         </p>

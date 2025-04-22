@@ -1,10 +1,10 @@
-import { Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Navbar, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from "../hooks";
-import { pagesRoutes } from "../api/routes";
+import { useAuth } from '../hooks';
+import { pagesRoutes } from '../api/routes';
 
 const RenderLogOut = () => {
   const auth = useAuth();

@@ -1,21 +1,21 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import socketApi from "../api/socket";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 
-import { Row, Col } from "react-bootstrap";
-import MyModal from "./Modal";
-import Channels from "./chatComponents/Channels";
-import Messages from "./chatComponents/Messages";
-import MessageForm from './chatComponents/MessageForm'
+import MyModal from './Modal';
+import Channels from './chatComponents/Channels';
+import Messages from './chatComponents/Messages';
+import MessageForm from './chatComponents/MessageForm';
 import '../css/chatpage.css';
 
-import { fetchMessages } from "../slices/messagesSlice";
+import socketApi from '../api/socket';
 
-import { fetchChannels } from "../slices/channelsSlice";
+import { fetchMessages } from '../slices/messagesSlice';
+import { fetchChannels } from '../slices/channelsSlice';
 
-import { setOpen } from "../slices/modalSlice";
+import { setOpen } from '../slices/modalSlice';
 
-const Chat = ({  }) => {
+const Chat = () => {
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state) => state.messages);
@@ -27,11 +27,6 @@ const Chat = ({  }) => {
     dispatch(fetchMessages());
   }, [dispatch]);
 
-  /*
-  const scrollToBottom = () => {
-    
-  }
-*/
   useEffect(() => {
     const socketListeners = socketApi(dispatch);
     return socketListeners;

@@ -7,8 +7,7 @@
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "prettier": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
@@ -29,7 +28,9 @@
     "redux": "^5.0.1",
     "socket.io-client": "^4.8.1",
     "vite": "^6.0.5",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "@rollbar/react": "^0.12.1",
+    "rollbar": "^2.26.4"
   },
   "devDependencies": {
     "eslint": "^8.34.0",

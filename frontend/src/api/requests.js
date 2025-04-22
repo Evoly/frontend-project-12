@@ -7,6 +7,7 @@ const api = async (method, url, data = {}) => {
     (config) => {
       const token = JSON.parse(localStorage.getItem('userId'));
       if (token) {
+        // eslint-disable-next-line no-param-reassign
         config.headers.Authorization = `Bearer ${token.token}`;
       }
       return config;
@@ -17,14 +18,13 @@ const api = async (method, url, data = {}) => {
   );
 
   const request = {
-    post: async () => await instance.post(url, data),
-    get: async () => await instance.get(url),
-    delete: async () => await instance.delete(url),
-    patch: async () => await instance.patch(url, data),
+    post: () => instance.post(url, data),
+    get: () => instance.get(url),
+    delete: () => instance.delete(url),
+    patch: () => instance.patch(url, data),
   };
 
-  const response = await request[method]();
-  return response;
+  return request[method]();
 };
 
 export default api;

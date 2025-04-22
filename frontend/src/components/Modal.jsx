@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import ModalRemoveChannel from "./modalComponents/ModalRemoveChannel";
-import ModalRenameChannel from "./modalComponents/ModalRenameChannel";
-import ModalAddChannel from "./modalComponents/ModalAddChannel";
+import ModalRemoveChannel from './modalComponents/ModalRemoveChannel';
+import ModalRenameChannel from './modalComponents/ModalRenameChannel';
+import ModalAddChannel from './modalComponents/ModalAddChannel';
 
-import { setClose } from "../slices/modalSlice";
+import { setClose } from '../slices/modalSlice';
+
 const types = {
   removeChannel: ModalRemoveChannel,
   addChannel: ModalAddChannel,

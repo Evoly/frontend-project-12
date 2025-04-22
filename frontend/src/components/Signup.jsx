@@ -1,5 +1,7 @@
-import { Row, Col, Form, Button } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import {
+  Row, Col, Form, Button,
+} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Signup = ({ props }) => {
   const { err, formik } = props;
@@ -11,17 +13,17 @@ const Signup = ({ props }) => {
         <Col className="col-12 col-md-8 col-xxl-6">
           <div
             className="shadow-sm row"
-            style={{ backgroundColor: "var(--bs-body-bg)" }}
+            style={{ backgroundColor: 'var(--bs-body-bg)' }}
           >
             <div className="d-flex col-12 col-md-6 justify-content-center align-content-center p-5">
               <img
                 className="rounded-circle"
                 src="/img-1.jpg"
-                alt="Войти"
+                alt={t('forms.registrationTitle')}
               />
             </div>
             <div className="col-12 col-md-6 mt-3 mt-md-0 text-center p-4">
-              <h1>{t("forms.registrationTitle")}</h1>
+              <h1>{t('forms.registrationTitle')}</h1>
               <Form className="mb-4" onSubmit={formik.handleSubmit} noValidate>
                 <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
@@ -30,17 +32,17 @@ const Signup = ({ props }) => {
                     autoComplete="username"
                     required=""
                     aria-describedby="userNameHelpBlock"
-                    placeholder={t("forms.registrationName")}
+                    placeholder={t('forms.registrationName')}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
                     isInvalid={
-                      err === 409 ||
-                      (formik.errors.username && formik.touched.username)
+                      err === 409
+                      || (formik.errors.username && formik.touched.username)
                     }
                   />
                   <Form.Label>
-                    {t("forms.registrationName")}
+                    {t('forms.registrationName')}
                   </Form.Label>
                   {formik.errors.username && (
                     <Form.Control.Feedback type="invalid" tooltip>
@@ -55,7 +57,7 @@ const Signup = ({ props }) => {
                     required=""
                     autoComplete="new-password"
                     type="password"
-                    placeholder={t("forms.password")}
+                    placeholder={t('forms.password')}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
@@ -64,7 +66,7 @@ const Signup = ({ props }) => {
                     }
                   />
                   <Form.Label>
-                    {t("forms.password")}
+                    {t('forms.password')}
                   </Form.Label>
                   {formik.errors.password && (
                     <Form.Control.Feedback type="invalid" tooltip>
@@ -82,26 +84,26 @@ const Signup = ({ props }) => {
                     aria-describedby="passwordHelpBlock"
                     required=""
                     autoComplete="new-password"
-                    placeholder={t("forms.confirmPassword")}
+                    placeholder={t('forms.confirmPassword')}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
                     isInvalid={
-                      formik.errors.confirmPassword &&
-                      formik.touched.confirmPassword
+                      formik.errors.confirmPassword
+                      && formik.touched.confirmPassword
                     }
                   />
                   <Form.Label>
-                    {t("forms.confirmPassword")}
+                    {t('forms.confirmPassword')}
                   </Form.Label>
                   {(formik.errors.confirmPassword || err === 409) && (
-                    <Form.Control.Feedback type="invalid" tooltip style={{ display: "block" }}>
-                      {formik.errors.confirmPassword || t("errors.409")}
+                    <Form.Control.Feedback type="invalid" tooltip style={{ display: 'block' }}>
+                      {formik.errors.confirmPassword || t('errors.409')}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
                 <Button className="w-100 mb-3 btn btn-primary" type="submit">
-                  {t("forms.registrationButton")}
+                  {t('forms.registrationButton')}
                 </Button>
               </Form>
             </div>

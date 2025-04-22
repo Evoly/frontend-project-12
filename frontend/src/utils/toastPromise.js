@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const toastPromise = (promise, message) => toast.promise(promise, {
+const toastPromise = (promise, message) => toast.promise(promise, {
   pending: {
     render() {
       return message.loading;
@@ -17,3 +17,5 @@ export const toastPromise = (promise, message) => toast.promise(promise, {
     },
   },
 });
+
+export default toastPromise;

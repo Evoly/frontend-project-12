@@ -8,7 +8,7 @@ import filter from 'leo-profanity';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 import { addChannelRequest as addChannel, changeActiveChannel } from '../../slices/channelsSlice';
-import { toastPromise } from '../../utils/toastPromise';
+import toastPromise from '../../utils/toastPromise';
 
 const ModalAddChannel = ({ channels, show, handleClose }) => {
   const dispatch = useDispatch();

@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import filter from "leo-profanity";
+import filter from 'leo-profanity';
 import EmojiPicker from 'emoji-picker-react';
 
-import { useAuth, useUiContext } from "../../hooks";
-import { sendMessage } from "../../slices/messagesSlice";
+import { useAuth, useUiContext } from '../../hooks';
+import { sendMessage } from '../../slices/messagesSlice';
 
 import Smile from '../svg/Smile';
 import Arrow from '../svg/Arrow';
@@ -21,16 +21,16 @@ const MessageForm = ({ activeChannelId }) => {
   const { show } = useSelector((state) => state.modal);
 
   useEffect(() => {
-    inputRef.saveInputRef(messageRef.current)
-  }, [inputRef])
+    inputRef.saveInputRef(messageRef.current);
+  }, [inputRef]);
 
   useEffect(() => {
     if (!show) {
       inputRef.setFocus();
-    }    
-  }, [show, inputRef])
+    }
+  }, [show, inputRef]);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [showPicker, setShowPicker] = useState(false);
 
   const onEmojiClick = (event) => {
@@ -52,11 +52,11 @@ const MessageForm = ({ activeChannelId }) => {
   }, [showPicker]);
 
   useEffect(() => {
-    if (!showPicker) return;
+    if (!showPicker) return undefined;
     document.addEventListener('keydown', closeEmojiBox);
 
     return () => document.removeEventListener('keydown', closeEmojiBox);
-  }, [showPicker]);
+  }); // TODO
 
   const handleMessage = (event) => setMessage(event.target.value);
 
@@ -71,32 +71,32 @@ const MessageForm = ({ activeChannelId }) => {
         username,
       }),
     );
-    setMessage("");
+    setMessage('');
   };
 
   return (
-    <div className='mt-auto px-5 py-3'>
+    <div className="mt-auto px-5 py-3">
       {showPicker && (
-        <EmojiPicker onEmojiClick={onEmojiClick} emojiContainerClassName='emoji-box' />
+        <EmojiPicker onEmojiClick={onEmojiClick} emojiContainerClassName="emoji-box" />
       )}
-      <Form noValidate className='p-1 border rounded-2' onSubmit={handleSubmit}>
+      <Form noValidate className="p-1 border rounded-2" onSubmit={handleSubmit}>
         <InputGroup>
           <Smile
             handlePicker={handlePicker}
-            classNames={'message-svg position-absolute top-50 translate-middle'}
+            classNames="message-svg position-absolute top-50 translate-middle"
           />
           <Form.Control
-            name='body'
+            name="body"
             aria-label={t('chatPage.newMessage')}
             placeholder={t('chatPage.placeholder')}
-            className='border-0 p-0 ps-5'
+            className="border-0 p-0 ps-5"
             onChange={handleMessage}
             value={message}
             ref={messageRef}
           />
-          <Button variant='' type='submit' className='btn-group-vertical' disabled=''>
+          <Button variant="" type="submit" className="btn-group-vertical" disabled="">
             <Arrow />
-            <span className='visually-hidden'>{t('chatPage.submit')}</span>
+            <span className="visually-hidden">{t('chatPage.submit')}</span>
           </Button>
         </InputGroup>
       </Form>
