@@ -1,6 +1,6 @@
 [![Actions Status](https://github.com/Evoly/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Evoly/frontend-project-12/actions)
 
-# Chat App
+# Hexlet Chat
 
 It'is a real-time messaging application. The application is divided into channels, each representing a separate chat room. Users can join existing channels, create new ones, or send messages to other registered users.
 
