@@ -66,7 +66,6 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
-      setActiveChannel(state, action.payload.id);
     },
     removeChannel: (state, action) => {
       state.channels = state.channels.filter(
