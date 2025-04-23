@@ -17,8 +17,8 @@ const Signup = ({ props }) => {
           >
             <div className="d-flex col-12 col-md-6 justify-content-center align-content-center p-5">
               <img
-                className="rounded-circle"
-                src="/img-1.jpg"
+                className="rounded-circle m-auto"
+                src="/img-2.jpg"
                 alt={t('forms.registrationTitle')}
               />
             </div>

@@ -21,9 +21,9 @@ const Login = ({ props }) => {
           >
             <div className="d-flex col-12 col-md-6 justify-content-center align-content-center p-5">
               <img
-                className="rounded-circle"
+                className="rounded-circle m-auto"
                 src="/img-1.jpg"
-                alt="Войти"
+                alt={t('forms.authTitle')}
               />
             </div>
             <div className="col-12 col-md-6 mt-3 mt-md-0 text-center p-4">
@@ -87,7 +87,7 @@ const Login = ({ props }) => {
               </Form>
             </div>
             <div className="col-12 shadow-sm text-center p-3 bg-light">
-              <span>
+              <span className="pe-1">
                 {t('forms.notAccount')}
               </span>
               <Link to={pagesRoutes.signup()}>

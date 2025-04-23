@@ -38,23 +38,27 @@ const Chat = () => {
     <main className="container overflow-hidden vh-100 rounded shadow my-4">
       <Row className="h-100 bg-white flex-md-row">
         <Col
-          col={4}
-          md={2}
-          className="border-end px-0 bg-light flex-column h-100 d-flex"
+          col={12}
+          md={4}
+          className="border-end px-0 bg-light flex-column d-flex"
         >
           <Channels
             channels={channels}
             handleModal={handleModal}
           />
         </Col>
-        <Col className="p-0 h-100">
+        <Col
+          col={12}
+          md={8}
+          className="p-0"
+        >
           <div className="d-flex flex-column h-100">
             <Messages
               messages={messages}
               channels={channels}
               activeChannelId={activeChannelId}
             />
-            <div className="mt-auto px-5 py-3">
+            <div className="mt-auto px-1 py-3">
               <MessageForm activeChannelId={activeChannelId} />
             </div>
           </div>
