@@ -14,7 +14,7 @@ import NotFound from './pages/NotFound';
 import ChatPage from './pages/ChatPage';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('userId'));
   const [user, setUser] = useState();
   const [authError, setError] = useState('');
 
