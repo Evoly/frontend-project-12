@@ -1,16 +1,18 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 
-import { removeChannelRequest as removeChannel } from '../../slices/channelsSlice';
+import { changeActiveChannel, useRemoveChannelMutation } from '../../slices/channelsSlice';
 import toastPromise from '../../utils/toastPromise';
 
 const ModalRemoveChannel = ({ show, handleClose, id }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [removeChannel] = useRemoveChannelMutation();
+  const { activeChannelId } = useSelector((state) => state.channels);
   const message = {
     loading: t('channel.removeChannelPending'),
     success: t('channel.removeChannelFulfilled'),
@@ -26,7 +28,10 @@ const ModalRemoveChannel = ({ show, handleClose, id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const response = dispatch(removeChannel({ id })).unwrap();
+    const response = removeChannel({ id }).unwrap();
+    if (id === activeChannelId) {
+      dispatch(changeActiveChannel(null));
+    }
     toastPromise(response, message);
     handleClose();
   };

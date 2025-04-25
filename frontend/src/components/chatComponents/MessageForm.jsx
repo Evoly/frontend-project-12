@@ -1,22 +1,23 @@
 import { useRef, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import EmojiPicker from 'emoji-picker-react';
 
 import { useAuth, useUiContext } from '../../hooks';
-import { sendMessage } from '../../slices/messagesSlice';
+import { useSendMessageMutation } from '../../slices/messagesSlice';
 
 import Smile from '../svg/Smile';
 import Arrow from '../svg/Arrow';
 
 const MessageForm = ({ activeChannelId }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const auth = useAuth();
   const inputRef = useUiContext();
   const messageRef = useRef(null);
+
+  const [sendMessage] = useSendMessageMutation();
 
   const { show } = useSelector((state) => state.modal);
 
@@ -47,7 +48,7 @@ const MessageForm = ({ activeChannelId }) => {
   };
   useEffect(() => {
     if (!showPicker) {
-      messageRef.current.focus();
+      messageRef.current.focus(); // TODO
     }
   }, [showPicker]);
 
@@ -65,13 +66,12 @@ const MessageForm = ({ activeChannelId }) => {
     if (!message.trim()) return;
     const filteredMessage = filter.clean(message);
     const { username } = auth.getUser();
-    dispatch(
-      sendMessage({
-        body: filteredMessage,
-        channelId: activeChannelId,
-        username,
-      }),
-    );
+    sendMessage({
+      body: filteredMessage,
+      channelId: activeChannelId,
+      username,
+    });
+
     setMessage('');
   };
 

@@ -4,6 +4,8 @@ import ModalRemoveChannel from './modalComponents/ModalRemoveChannel';
 import ModalRenameChannel from './modalComponents/ModalRenameChannel';
 import ModalAddChannel from './modalComponents/ModalAddChannel';
 
+import { useGetChannelsQuery } from '../slices/channelsSlice';
+
 import { setClose } from '../slices/modalSlice';
 
 const types = {
@@ -14,7 +16,7 @@ const types = {
 
 const MyModal = () => {
   const { type, show, id } = useSelector((state) => state.modal);
-  const { channels } = useSelector((state) => state.channels);
+  const { data: channels = [] } = useGetChannelsQuery();
 
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setClose());

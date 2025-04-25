@@ -7,11 +7,13 @@ import filter from 'leo-profanity';
 
 import { Button, Form, Modal } from 'react-bootstrap';
 
-import { addChannelRequest as addChannel, changeActiveChannel } from '../../slices/channelsSlice';
+import { changeActiveChannel, useAddChannelMutation } from '../../slices/channelsSlice';
+
 import toastPromise from '../../utils/toastPromise';
 
 const ModalAddChannel = ({ channels, show, handleClose }) => {
   const dispatch = useDispatch();
+  const [addChannel] = useAddChannelMutation();
   const { t } = useTranslation();
   const message = {
     loading: t('channel.addChannelPending'),
@@ -47,7 +49,7 @@ const ModalAddChannel = ({ channels, show, handleClose }) => {
     validateOnChange: true,
     onSubmit: async (values) => {
       const name = filter.clean(values.name);
-      const response = dispatch(addChannel({ name }))
+      const response = addChannel({ name })
         .unwrap()
         .then(({ id }) => dispatch(changeActiveChannel(id)));
       toastPromise(response, message);
