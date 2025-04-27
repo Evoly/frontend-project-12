@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useAuth } from '../hooks';
-import { userRoutes } from '../api/routes';
+import { userRoutes, pagesRoutes } from '../api/routes';
 import api from '../api/requests';
 
 import Login from '../components/Login';
@@ -35,11 +35,11 @@ const LoginPage = () => {
       auth.updateAuthError(null);
       try {
         const res = await api('post', userRoutes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
         const { username } = values;
+        localStorage.setItem('userId', JSON.stringify({ ...res.data, username }));
         auth.logIn();
         auth.addUser({ username });
-        navigate('/');
+        navigate(`${pagesRoutes.chat()}`);
       } catch (err) {
         setIsAuthFailed(true);
         const authError = err.status ?? err.code;
