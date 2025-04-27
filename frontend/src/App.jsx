@@ -14,8 +14,10 @@ import NotFound from './pages/NotFound';
 import ChatPage from './pages/ChatPage';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('userId'));
-  const [user, setUser] = useState();
+  const savedData = localStorage.getItem('userId') ?? '';
+  const username = savedData ? JSON.parse(savedData).username : '';
+  const [loggedIn, setLoggedIn] = useState(!!savedData);
+  const [user, setUser] = useState({ username });
   const [authError, setError] = useState('');
 
   const logIn = useCallback(() => setLoggedIn(true), []);

@@ -1,42 +1,50 @@
-/* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { removeChannel } from './channelsSlice';
+import socket from '../api/socket';
 
-import { dataRoutes } from '../api/routes';
-import api from '../api/requests';
-
-const initialState = {
-  messages: [],
-  loadingStatus: 'idle',
-  error: null,
-};
-
-const handleLoading = (state) => {
-  state.loadingStatus = 'loading';
-  state.error = null;
-};
-const handleFailed = (state, action) => {
-  state.loadingStatus = 'failed';
-  state.error = action.error;
-};
-
-export const fetchMessages = createAsyncThunk(
-  'messages/fetchMessages',
-  async () => {
-    const response = await api('get', dataRoutes.messages());
-    return response.data;
-  },
-);
-
-export const sendMessage = createAsyncThunk(
-  'messages/addMessage',
-  async (newMessage) => {
-    const response = await api('post', dataRoutes.messages(), newMessage);
-    return response.data;
-  },
-);
-
+export const messagesApi = createApi({
+  reducerPath: 'messagesApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: '/api/v1/',
+    prepareHeaders: (headers) => {
+      const token = JSON.parse(localStorage.getItem('userId'));
+      if (token) {
+        headers.set('Authorization', `Bearer ${token.token}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getMessages: builder.query({
+      query: () => 'messages',
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+      ) {
+        try {
+          await cacheDataLoaded;
+          socket.on('newMessage', (message) => {
+            updateCachedData((draft) => {
+              draft.push(message);
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+        await cacheEntryRemoved;
+        if (socket) socket.close();
+      },
+    }),
+    sendMessage: builder.mutation({
+      query: (message) => ({
+        url: 'messages',
+        method: 'POST',
+        body: message,
+      }),
+    }),
+  }),
+});
+/*
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -62,3 +70,6 @@ const messagesSlice = createSlice({
 
 export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
+*/
+
+export const { useGetMessagesQuery, useSendMessageMutation } = messagesApi;

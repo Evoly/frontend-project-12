@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
@@ -8,29 +7,18 @@ import Messages from './chatComponents/Messages';
 import MessageForm from './chatComponents/MessageForm';
 import '../css/chatpage.css';
 
-import socketApi from '../api/socket';
-
-import { fetchMessages } from '../slices/messagesSlice';
-import { fetchChannels } from '../slices/channelsSlice';
+import { useGetMessagesQuery } from '../slices/messagesSlice';
+import { useGetChannelsQuery } from '../slices/channelsSlice';
 
 import { setOpen } from '../slices/modalSlice';
 
 const Chat = () => {
   const dispatch = useDispatch();
 
-  const { messages } = useSelector((state) => state.messages);
-  const { channels } = useSelector((state) => state.channels);
+  const { data: messages = [] } = useGetMessagesQuery();
+  const { data: channels = [] } = useGetChannelsQuery();
+
   const { activeChannelId } = useSelector((state) => state.channels);
-
-  useEffect(() => {
-    dispatch(fetchChannels());
-    dispatch(fetchMessages());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const socketListeners = socketApi(dispatch);
-    return socketListeners;
-  }, [dispatch]);
 
   const handleModal = (id, type) => dispatch(setOpen(id, type));
 

@@ -1,19 +1,18 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { Button, Form, Modal } from 'react-bootstrap';
 
-import { renameChannelRequest as renameChannel } from '../../slices/channelsSlice';
+import { useRenameChannelMutation } from '../../slices/channelsSlice';
 import toastPromise from '../../utils/toastPromise';
 
 const ModalRenameChannel = ({
   channels, show, handleClose, id,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [renameChannel] = useRenameChannelMutation();
 
   const message = {
     loading: t('channel.renameChannelPending'),
@@ -50,7 +49,7 @@ const ModalRenameChannel = ({
     validateOnChange: true,
     onSubmit: async (values) => {
       const name = filter.clean(values.name);
-      const response = dispatch(renameChannel({ name, id })).unwrap();
+      const response = renameChannel({ name, id }).unwrap();
       toastPromise(response, message);
 
       handleClose();
