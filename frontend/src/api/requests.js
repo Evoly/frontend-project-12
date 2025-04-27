@@ -7,7 +7,6 @@ const api = async (method, url, data = {}) => {
     (config) => {
       const token = JSON.parse(localStorage.getItem('userId'));
       if (token) {
-        // eslint-disable-next-line no-param-reassign
         config.headers.Authorization = `Bearer ${token.token}`;
       }
       return config;
