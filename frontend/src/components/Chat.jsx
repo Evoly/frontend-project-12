@@ -1,26 +1,26 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
 
-import MyModal from './Modal';
-import Channels from './chatComponents/Channels';
-import Messages from './chatComponents/Messages';
-import MessageForm from './chatComponents/MessageForm';
-import '../css/chatpage.css';
+import MyModal from './Modal'
+import Channels from './chatComponents/Channels'
+import Messages from './chatComponents/Messages'
+import MessageForm from './chatComponents/MessageForm'
+import '../css/chatpage.css'
 
-import { useGetMessagesQuery } from '../slices/messagesSlice';
-import { useGetChannelsQuery } from '../slices/channelsSlice';
+import { useGetMessagesQuery } from '../slices/messagesSlice'
+import { useGetChannelsQuery } from '../slices/channelsSlice'
 
-import { setOpen } from '../slices/modalSlice';
+import { setOpen } from '../slices/modalSlice'
 
 const Chat = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const { data: messages = [] } = useGetMessagesQuery();
-  const { data: channels = [] } = useGetChannelsQuery();
+  const { data: messages = [] } = useGetMessagesQuery()
+  const { data: channels = [] } = useGetChannelsQuery()
 
-  const { activeChannelId } = useSelector((state) => state.channels);
+  const { activeChannelId } = useSelector(state => state.channels)
 
-  const handleModal = (id, type) => dispatch(setOpen(id, type));
+  const handleModal = (id, type) => dispatch(setOpen(id, type))
 
   return (
     <main className="container overflow-hidden vh-100 rounded shadow my-4">
@@ -54,7 +54,7 @@ const Chat = () => {
       </Row>
       <MyModal />
     </main>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

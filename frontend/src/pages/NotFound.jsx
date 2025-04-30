@@ -1,12 +1,12 @@
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
-import { pagesRoutes } from '../api/routes';
+import { pagesRoutes } from '../api/routes'
 
 const NotFound = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <main className="container-fluid h-100">
@@ -29,7 +29,7 @@ const NotFound = () => {
         </Col>
       </Row>
     </main>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

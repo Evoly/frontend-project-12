@@ -31,6 +31,6 @@ const Smile = ({ classNames, handlePicker }) => (
       {' '}
     </g>
   </svg>
-);
+)
 
-export default Smile;
+export default Smile

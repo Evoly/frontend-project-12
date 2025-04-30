@@ -1,11 +1,11 @@
 import {
   Row, Col, Form, Button,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const Signup = ({ props }) => {
-  const { err, formik } = props;
-  const { t } = useTranslation();
+  const { err, formik } = props
+  const { t } = useTranslation()
 
   return (
     <main className="container-fluid h-100">
@@ -111,7 +111,7 @@ const Signup = ({ props }) => {
         </Col>
       </Row>
     </main>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import {
   Row, Col, Form, Button,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
-import { pagesRoutes } from '../api/routes';
+import { pagesRoutes } from '../api/routes'
 
 const Login = ({ props }) => {
-  const { formik, err } = props;
-  const { t } = useTranslation();
+  const { formik, err } = props
+  const { t } = useTranslation()
 
   return (
     <main className="container-fluid h-100">
@@ -98,7 +98,7 @@ const Login = ({ props }) => {
         </Col>
       </Row>
     </main>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

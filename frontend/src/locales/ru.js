@@ -74,6 +74,6 @@ const ru = {
       submit: 'Отправить',
     },
   },
-};
+}
 
-export default ru;
+export default ru

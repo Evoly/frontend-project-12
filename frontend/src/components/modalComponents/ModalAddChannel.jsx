@@ -1,32 +1,32 @@
-import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
+import { useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
+import { useTranslation } from 'react-i18next'
+import filter from 'leo-profanity'
 
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap'
 
-import { changeActiveChannel, useAddChannelMutation } from '../../slices/channelsSlice';
+import { changeActiveChannel, useAddChannelMutation } from '../../slices/channelsSlice'
 
-import toastPromise from '../../utils/toastPromise';
+import toastPromise from '../../utils/toastPromise'
 
 const ModalAddChannel = ({ channels, show, handleClose }) => {
-  const dispatch = useDispatch();
-  const [addChannel] = useAddChannelMutation();
-  const { t } = useTranslation();
+  const dispatch = useDispatch()
+  const [addChannel] = useAddChannelMutation()
+  const { t } = useTranslation()
   const message = {
     loading: t('channel.addChannelPending'),
     success: t('channel.addChannelFulfilled'),
     error: t('channel.addChannelRejected'),
-  };
+  }
 
-  const modalRef = useRef(null);
+  const modalRef = useRef(null)
   useEffect(() => {
     if (show && modalRef.current) {
-      modalRef.current.select();
+      modalRef.current.select()
     }
-  }, [show]);
+  }, [show])
 
   const schema = yup.object({
     name: yup
@@ -37,9 +37,9 @@ const ModalAddChannel = ({ channels, show, handleClose }) => {
       .test(
         'is name uniq',
         t('validation.channelsValidation.duplicate'),
-        (val) => !channels.some(({ name }) => name === val),
+        val => !channels.some(({ name }) => name === val),
       ),
-  });
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -48,18 +48,18 @@ const ModalAddChannel = ({ channels, show, handleClose }) => {
     validationSchema: schema,
     validateOnChange: true,
     onSubmit: async (values) => {
-      const name = filter.clean(values.name);
+      const name = filter.clean(values.name)
       const response = addChannel({ name })
         .unwrap()
-        .then(({ id }) => dispatch(changeActiveChannel(id)));
-      toastPromise(response, message);
-      handleClose();
+        .then(({ id }) => dispatch(changeActiveChannel(id)))
+      toastPromise(response, message)
+      handleClose()
     },
-  });
+  })
 
   const inputClasses = formik.touched.name && formik.errors.name
     ? 'is-invalid p-2 ps-1 border rounded-2 mb-2'
-    : 'p-1 ps-2 border rounded-2 mb-3';
+    : 'p-1 ps-2 border rounded-2 mb-3'
 
   return (
     <Modal show={show} size="lg" centered onHide={handleClose}>
@@ -83,16 +83,18 @@ const ModalAddChannel = ({ channels, show, handleClose }) => {
               ref={modalRef}
             />
             <Form.Label className="visually-hidden">{t('channel.channelName')}</Form.Label>
-            {formik.touched.name && formik.errors.name ? (
-              <div className="text-danger w-100">{formik.errors.name}</div>
-            ) : null}
+            {formik.touched.name && formik.errors.name
+              ? (
+                  <div className="text-danger w-100">{formik.errors.name}</div>
+                )
+              : null}
           </Form.Group>
           <Button
             variant="secondary"
             type="reset"
             onClick={() => {
-              formik.resetForm();
-              handleClose();
+              formik.resetForm()
+              handleClose()
             }}
           >
             {t('modal.cancelButton')}
@@ -103,7 +105,7 @@ const ModalAddChannel = ({ channels, show, handleClose }) => {
         </Form>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalAddChannel;
+export default ModalAddChannel

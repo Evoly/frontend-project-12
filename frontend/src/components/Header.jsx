@@ -1,24 +1,24 @@
-import { Navbar, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Navbar, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '../hooks';
-import { pagesRoutes } from '../api/routes';
+import { useAuth } from '../hooks'
+import { pagesRoutes } from '../api/routes'
 
 const RenderLogOut = () => {
-  const auth = useAuth();
-  const { t } = useTranslation();
+  const auth = useAuth()
+  const { t } = useTranslation()
 
   return (
     <Button type="button" className="btn-primary" onClick={auth.logOut}>
       {t('forms.signout')}
     </Button>
-  );
-};
+  )
+}
 
 const Header = () => {
-  const auth = useAuth();
+  const auth = useAuth()
 
   return (
     <header className="shadow-sm bg-white ">
@@ -29,7 +29,7 @@ const Header = () => {
         {auth.loggedIn && <RenderLogOut />}
       </Navbar>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

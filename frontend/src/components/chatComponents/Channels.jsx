@@ -1,17 +1,17 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 import {
   ListGroup, ListGroupItem, Button, Dropdown, ButtonGroup,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
-import { changeActiveChannel } from '../../slices/channelsSlice';
-import { useUiContext } from '../../hooks';
-import Cross from '../svg/Cross';
+import { changeActiveChannel } from '../../slices/channelsSlice'
+import { useUiContext } from '../../hooks'
+import Cross from '../svg/Cross'
 
 const Channels = ({ channels, handleModal }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const inputRef = useUiContext();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const inputRef = useUiContext()
 
   const channelName = (id, name) => (
     <Button
@@ -19,8 +19,8 @@ const Channels = ({ channels, handleModal }) => {
       type="button"
       className="w-100 rounded-0 text-start btn btn-secondary text-truncate"
       onClick={() => {
-        dispatch(changeActiveChannel(id));
-        inputRef.setFocus();
+        dispatch(changeActiveChannel(id))
+        inputRef.setFocus()
       }}
     >
       {' '}
@@ -28,7 +28,7 @@ const Channels = ({ channels, handleModal }) => {
       {' '}
       {name}
     </Button>
-  );
+  )
 
   const renderDropdown = (name, id) => (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -56,13 +56,13 @@ const Channels = ({ channels, handleModal }) => {
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-  );
+  )
 
   const renderListGroup = () => channels.map(({ id, name, removable }) => (
     <ListGroupItem key={id} as="li" className="w-100 p-0">
       {removable ? renderDropdown(name, id) : channelName(id, name)}
     </ListGroupItem>
-  ));
+  ))
 
   return (
     <>
@@ -82,7 +82,7 @@ const Channels = ({ channels, handleModal }) => {
         {renderListGroup()}
       </ListGroup>
     </>
-  );
-};
+  )
+}
 
-export default Channels;
+export default Channels

@@ -10,6 +10,6 @@ const rollbarConfig = {
       },
     },
   },
-};
+}
 
-export default rollbarConfig;
+export default rollbarConfig
